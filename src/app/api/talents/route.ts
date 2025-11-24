@@ -27,3 +27,39 @@ export async function GET(request: Request) {
         );
     }
 }
+
+export async function POST(request: Request) {
+    try {
+        const tableName = 'Talent Profiles';
+
+        // Parse the request body
+        const body = await request.json();
+
+        const data = {
+            Name: body.fullName,
+            Email: body.email,
+            "Phone Number": body.phone,
+            Role: body.role,
+            Skills: body.skills,
+            "Portfolio Link": body.portfolioLink,
+            "Github URL": body.githubLink,
+            "LinkedIn Profile URL": body.linkedInURL,
+            Experience: body.experienceLevel,
+            Category: body.category,
+            Location: body.location,
+            Rates: Number(body.rates),
+        };
+
+        // Create a new record in Airtable
+        const record = await BASE(tableName).create([{ fields: data }], { typecast: true });
+
+        // Return the created record
+        return NextResponse.json({ data: record, success: true });
+    } catch (error) {
+        console.error('Airtable API Error:', error);
+        return NextResponse.json(
+            { error: 'Failed to create record in Airtable', success: false },
+            { status: 500 }
+        );
+    }
+}

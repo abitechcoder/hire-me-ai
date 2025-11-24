@@ -59,7 +59,7 @@ const TalentCard = ({ person }) => {
             <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
                 <div className="flex items-center">
                     <MapPin size={14} className="mr-1" />
-                    Lagos, Nigeria
+                    {person.fields.Location}
                 </div>
                 <div
                     className={`flex items-center ${person.availability === "Available" ? "text-green-600" : "text-orange-600"}`}
@@ -155,7 +155,7 @@ const TalentCard = ({ person }) => {
                     View Profile
                 </Link>
                 <button
-                    onClick={() => handleRequestCandidate(person.id)}
+                    // onClick={() => handleRequestCandidate(person.id)}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
                     style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                 >

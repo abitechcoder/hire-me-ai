@@ -97,9 +97,9 @@ export default function BrowseTalentPage() {
     if (searchTerm) {
       filtered = filtered.filter(
         (person: any) =>
-          person.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          person.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          person.skills.some((skill: any) =>
+          person.fields.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          person.fields.Role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          person.fields.Skills.some((skill: any) =>
             skill.toLowerCase().includes(searchTerm.toLowerCase()),
           ),
       );
@@ -107,21 +107,19 @@ export default function BrowseTalentPage() {
 
     if (selectedCategory) {
       filtered = filtered.filter((person: any) =>
-        person.title
-          .toLowerCase()
-          .includes(selectedCategory.toLowerCase().replace(" development", "")),
+        person.fields.Category === selectedCategory,
       );
     }
 
     if (selectedExperience) {
       filtered = filtered.filter(
-        (person: any) => person.experience === selectedExperience,
+        (person: any) => person.fields.Experience === selectedExperience,
       );
     }
 
     if (selectedLocation) {
       filtered = filtered.filter(
-        (person: any) => person.location === selectedLocation,
+        (person: any) => person.fields.Location === selectedLocation,
       );
     }
 

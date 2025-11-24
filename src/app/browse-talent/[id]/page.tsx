@@ -134,7 +134,7 @@ export default function ProfileView() {
                     <p className="text-lg text-gray-600 mt-1">{talent?.fields?.Role}</p>
                     <div className="flex items-center justify-center gap-2 mt-2 text-gray-500">
                       <MapPin size={16} />
-                      <span>Lagos, Nigeria</span>
+                      <span>{talent.fields.Location}</span>
                     </div>
                   </div>
                 </div>

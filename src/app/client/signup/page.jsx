@@ -7,36 +7,39 @@ import {
   Mail,
   User,
   DollarSign,
-  Clock,
+  Link,
+  CircleDollarSign
 } from "lucide-react";
 
 export default function ClientSignupPage() {
   const [formData, setFormData] = useState({
     companyName: "",
+    industry: "",
     contactPerson: "",
     email: "",
     roleRequirements: "",
-    budgetRange: "",
-    urgencyLevel: "",
+    budget: "",
+    linkedInUrl: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const budgetRanges = [
-    "$5,000 - $10,000",
-    "$10,000 - $25,000",
-    "$25,000 - $50,000",
-    "$50,000 - $100,000",
-    "$100,000+",
+  const industries = [
+    "Technology",
+    "Finance",
+    "Healthcare",
+    "Retail",
+    "Education",
+    "Other"
   ];
 
-  const urgencyLevels = [
-    "ASAP (24-48 hours)",
-    "Within 1 week",
-    "Within 2 weeks",
-    "Within 1 month",
-    "Flexible timeline",
-  ];
+  // const urgencyLevels = [
+  //   "ASAP (24-48 hours)",
+  //   "Within 1 week",
+  //   "Within 2 weeks",
+  //   "Within 1 month",
+  //   "Flexible timeline",
+  // ];
 
   const handleInputChange = (e) => {
     setFormData({
@@ -45,11 +48,17 @@ export default function ClientSignupPage() {
     });
   };
 
+  const handleBudgetChange = (e) => {
+    const value = e.target.value.replace(/[^0-9.]/g, ""); // Remove non-numeric characters
+    setFormData({ ...formData, budget: value }); // Store the raw numeric value
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      console.log(formData)
       const response = await fetch("/api/clients", {
         method: "POST",
         headers: {
@@ -178,6 +187,36 @@ export default function ClientSignupPage() {
                 />
               </div>
 
+              {/* Industry */}
+              <div>
+                <label
+                  htmlFor="industry"
+                  className="block text-sm font-semibold text-gray-900 mb-3"
+                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+                >
+                  <DollarSign size={16} className="inline mr-2" />
+                  Industry *
+                </label>
+                <select
+                  id="industry"
+                  name="industry"
+                  required
+                  value={formData.industry}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+                >
+                  <option value="">Select Industry</option>
+                  {industries.map((industry) => (
+                    <option key={industry} value={industry}>
+                      {industry}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
               {/* Contact Person */}
               <div>
                 <label
@@ -200,29 +239,29 @@ export default function ClientSignupPage() {
                   style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                 />
               </div>
-            </div>
 
-            {/* Email */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-900 mb-3"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                <Mail size={16} className="inline mr-2" />
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="your@company.com"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              />
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-gray-900 mb-3"
+                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+                >
+                  <Mail size={16} className="inline mr-2" />
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  placeholder="your@company.com"
+                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+                />
+              </div>
             </div>
 
             {/* Role Requirements */}
@@ -247,62 +286,57 @@ export default function ClientSignupPage() {
               />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Budget Range */}
-              <div>
-                <label
-                  htmlFor="budgetRange"
-                  className="block text-sm font-semibold text-gray-900 mb-3"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  <DollarSign size={16} className="inline mr-2" />
-                  Budget Range *
-                </label>
-                <select
-                  id="budgetRange"
-                  name="budgetRange"
-                  required
-                  value={formData.budgetRange}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  <option value="">Select budget range</option>
-                  {budgetRanges.map((range) => (
-                    <option key={range} value={range}>
-                      {range}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* Rates */}
+            <div>
+              <label
+                htmlFor="budget"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <CircleDollarSign size={16} className="inline mr-2" />
+                Budget *
+              </label>
+              <input
+                type="text"
+                id="budget"
+                name="budget"
+                required
+                value={
+                  formData.budget
+                    ? new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.budget)
+                    : ""
+                } // Format the value for display
+                onChange={handleBudgetChange} // Use the updated handler
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="e.g., $2000, $5000"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
+            </div>
 
-              {/* Urgency Level */}
-              <div>
-                <label
-                  htmlFor="urgencyLevel"
-                  className="block text-sm font-semibold text-gray-900 mb-3"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  <Clock size={16} className="inline mr-2" />
-                  Timeline *
-                </label>
-                <select
-                  id="urgencyLevel"
-                  name="urgencyLevel"
-                  required
-                  value={formData.urgencyLevel}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  <option value="">Select timeline</option>
-                  {urgencyLevels.map((level) => (
-                    <option key={level} value={level}>
-                      {level}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* LinkedIn Link */}
+            <div>
+              <label
+                htmlFor="linkedInUrl"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <Link size={16} className="inline mr-2" />
+                LinkedIn Profile Link *
+              </label>
+              <input
+                type="text"
+                id="linkedInUrl"
+                name="linkedInUrl"
+                required
+                value={formData.linkedInUrl}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Share a link to your LinkedIn profile"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
             </div>
 
             {/* Submit Button */}
