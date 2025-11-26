@@ -105,10 +105,10 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Welcome Banner */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome, Client
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             Manage your job posts, view matches, and hire verified African
             talent.
           </p>
@@ -122,17 +122,17 @@ export default function Dashboard() {
               <a
                 key={card.title}
                 href={card.href}
-                className="group relative bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                className="group relative bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center space-x-4 mb-4">
                   <div className={`p-3 rounded-lg ${card.color}`}>
                     <IconComponent size={24} className="text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  <h3 className="text-xl font-semibold text-gray-900">
                     {card.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed">
                   {card.description}
                 </p>
                 <div className="absolute bottom-4 right-4 text-[#007bff] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -158,7 +158,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Quick Actions */}
           <div className="lg:col-span-1">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Quick Actions
             </h2>
             <div className="space-y-3">
@@ -168,12 +168,12 @@ export default function Dashboard() {
                   <a
                     key={action.name}
                     href={action.href}
-                    className="flex items-center space-x-3 p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                    className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200  hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="p-2 bg-blue-50 rounded-lg">
                       <IconComponent size={16} className="text-[#007bff]" />
                     </div>
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="text-sm font-medium text-gray-900">
                       {action.name}
                     </span>
                   </a>
@@ -184,27 +184,27 @@ export default function Dashboard() {
 
           {/* Recent Activity */}
           <div className="lg:col-span-2">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Recent Activity
             </h2>
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-              <div className="divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+              <div className="divide-y divide-gray-200">
                 {recentActivity.map((activity) => {
                   const IconComponent = activity.icon;
                   return (
                     <div
                       key={activity.id}
-                      className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                      className="p-4 hover:bg-gray-50 transition-colors duration-200"
                     >
                       <div className="flex items-start space-x-3">
-                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <div className="p-2 bg-blue-50 rounded-lg">
                           <IconComponent size={16} className="text-[#007bff]" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          <p className="text-sm font-medium text-gray-900">
                             {activity.title}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className="text-sm text-gray-500">
                             {activity.timestamp}
                           </p>
                         </div>

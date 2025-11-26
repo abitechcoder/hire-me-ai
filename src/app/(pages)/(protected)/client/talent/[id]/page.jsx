@@ -19,10 +19,15 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-export default function TalentProfilePage({ params }) {
+import { useParams } from "next/navigation";
+
+export default function TalentProfilePage() {
+  const params = useParams();
   const [talent, setTalent] = useState(null);
   const [isContactUnlocked, setIsContactUnlocked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log("Params:", params);
 
   const talentId = params?.id;
 
@@ -145,20 +150,19 @@ export default function TalentProfilePage({ params }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Navigation />
+      <div className="min-h-screen bg-gray-50">
         <main className="max-w-6xl mx-auto px-6 py-8">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded mb-6 w-1/3"></div>
+            <div className="h-8 bg-gray-300 rounded mb-6 w-1/3"></div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-1">
-                <div className="h-64 bg-gray-300 dark:bg-gray-700 rounded-xl"></div>
+                <div className="h-64 bg-gray-300 rounded-xl"></div>
               </div>
               <div className="lg:col-span-2">
                 <div className="space-y-4">
-                  <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2"></div>
-                  <div className="h-20 bg-gray-300 dark:bg-gray-700 rounded"></div>
+                  <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-20 bg-gray-300 rounded"></div>
                 </div>
               </div>
             </div>
@@ -170,18 +174,17 @@ export default function TalentProfilePage({ params }) {
 
   if (!talent) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Navigation />
+      <div className="min-h-screen bg-gray-50">
         <main className="max-w-6xl mx-auto px-6 py-8">
           <div className="text-center py-12">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
               Talent Not Found
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               The talent profile you're looking for doesn't exist.
             </p>
             <a
-              href="/portal/browse-talent"
+              href="/client/browse-talent"
               className="inline-flex items-center px-4 py-2 bg-[#007bff] text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
             >
               <ArrowLeft size={16} className="mr-2" />
@@ -194,22 +197,21 @@ export default function TalentProfilePage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-
+    <div className="min-h-screen bg-gray-50">
       <main className="max-w-6xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
             <a
-              href="/portal/browse-talent"
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              href="/client/browse-talent"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               <ArrowLeft
                 size={20}
-                className="text-gray-600 dark:text-gray-400"
+                className="text-gray-600"
               />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Talent Profile
             </h1>
           </div>
@@ -219,7 +221,7 @@ export default function TalentProfilePage({ params }) {
           {/* Left Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Profile Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
               <div className="text-center mb-6">
                 <div className="relative inline-block mb-4">
                   <img
@@ -233,20 +235,20 @@ export default function TalentProfilePage({ params }) {
                     </div>
                   )}
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   {talent.name}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <p className="text-gray-600 mb-4">
                   {talent.role}
                 </p>
 
                 {/* Match Score */}
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-4">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
                   <div className="text-center">
-                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">
+                    <span className="text-2xl font-bold text-green-600">
                       {talent.matchScore}%
                     </span>
-                    <p className="text-sm text-green-600 dark:text-green-400 font-medium">
+                    <p className="text-sm text-green-600 font-medium">
                       Match Score
                     </p>
                   </div>
@@ -260,19 +262,19 @@ export default function TalentProfilePage({ params }) {
                         size={16}
                         className="text-yellow-400 fill-current"
                       />
-                      <span className="font-medium text-gray-900 dark:text-white">
+                      <span className="font-medium text-gray-900">
                         {talent.rating}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-500">
                       ({talent.totalReviews} reviews)
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="font-medium text-gray-900 dark:text-white mb-1">
+                    <p className="font-medium text-gray-900 mb-1">
                       {talent.placements}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-500">
                       Successful Placements
                     </p>
                   </div>
@@ -281,27 +283,27 @@ export default function TalentProfilePage({ params }) {
 
               {/* Basic Info */}
               <div className="space-y-3">
-                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-sm text-gray-600">
                   <MapPin size={16} className="mr-3" />
                   {talent.location}
                 </div>
-                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-sm text-gray-600">
                   <Clock size={16} className="mr-3" />
                   {talent.availability}
                 </div>
-                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-sm text-gray-600">
                   <Calendar size={16} className="mr-3" />
                   {talent.timezone}
                 </div>
               </div>
 
               {/* Pricing */}
-              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div className="mt-6 pt-6 border-t border-gray-200">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  <p className="text-2xl font-bold text-gray-900">
                     {talent.hourlyRate}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-gray-500">
                     Hourly Rate
                   </p>
                 </div>
@@ -318,7 +320,7 @@ export default function TalentProfilePage({ params }) {
                     Unlock Contact ($20)
                   </button>
                 ) : (
-                  <div className="text-center py-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-sm font-medium rounded-lg">
+                  <div className="text-center py-2 bg-green-50 text-green-600 text-sm font-medium rounded-lg">
                     ✓ Contact Unlocked
                   </div>
                 )}
@@ -339,7 +341,7 @@ export default function TalentProfilePage({ params }) {
                     disabled={!isContactUnlocked}
                     className={`inline-flex items-center justify-center px-3 py-2 font-medium rounded-lg transition-colors duration-200 ${
                       isContactUnlocked
-                        ? "border border-[#007bff] text-[#007bff] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                        ? "border border-[#007bff] text-[#007bff] hover:bg-blue-50"
                         : "bg-gray-100 text-gray-400 cursor-not-allowed"
                     }`}
                   >
@@ -351,15 +353,15 @@ export default function TalentProfilePage({ params }) {
             </div>
 
             {/* Skills */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Skills
               </h3>
               <div className="flex flex-wrap gap-2">
                 {talent.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-[#007bff] text-sm rounded-lg"
+                    className="px-3 py-1 bg-blue-50 text-[#007bff] text-sm rounded-lg"
                   >
                     {skill}
                   </span>
@@ -368,8 +370,8 @@ export default function TalentProfilePage({ params }) {
             </div>
 
             {/* Contact Information */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Contact Information
               </h3>
               <div className="space-y-3">
@@ -385,7 +387,7 @@ export default function TalentProfilePage({ params }) {
                   ) : (
                     <BlurredText
                       text="adebayo.johnson@email.com"
-                      className="text-gray-600 dark:text-gray-300"
+                      className="text-gray-600"
                     />
                   )}
                 </div>
@@ -401,7 +403,7 @@ export default function TalentProfilePage({ params }) {
                   ) : (
                     <BlurredText
                       text="+234 801 234 5678"
-                      className="text-gray-600 dark:text-gray-300"
+                      className="text-gray-600"
                     />
                   )}
                 </div>
@@ -420,7 +422,7 @@ export default function TalentProfilePage({ params }) {
                   ) : (
                     <BlurredText
                       text="LinkedIn Profile"
-                      className="text-gray-600 dark:text-gray-300"
+                      className="text-gray-600"
                     />
                   )}
                 </div>
@@ -439,7 +441,7 @@ export default function TalentProfilePage({ params }) {
                   ) : (
                     <BlurredText
                       text="GitHub Profile"
-                      className="text-gray-600 dark:text-gray-300"
+                      className="text-gray-600"
                     />
                   )}
                 </div>
@@ -450,22 +452,22 @@ export default function TalentProfilePage({ params }) {
           {/* Right Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* About Me */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 About Me
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed">
                 {talent.about}
               </p>
             </div>
 
             {/* Video Introduction */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Video Introduction
               </h3>
-              <div className="relative bg-gray-100 dark:bg-gray-700 rounded-lg h-48 flex items-center justify-center">
-                <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-[#007bff] transition-colors">
+              <div className="relative bg-gray-100 rounded-lg h-48 flex items-center justify-center">
+                <button className="flex items-center space-x-2 text-gray-600 hover:text-[#007bff] transition-colors">
                   <Play size={24} />
                   <span>Play Video Introduction</span>
                 </button>
@@ -473,28 +475,28 @@ export default function TalentProfilePage({ params }) {
             </div>
 
             {/* Experience Timeline */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Experience
               </h3>
               <div className="space-y-6">
                 {talent.experience_timeline.map((exp, index) => (
                   <div key={exp.id} className="relative pl-6">
                     {index !== talent.experience_timeline.length - 1 && (
-                      <div className="absolute left-2 top-8 bottom-0 w-px bg-gray-200 dark:bg-gray-600"></div>
+                      <div className="absolute left-2 top-8 bottom-0 w-px bg-gray-200"></div>
                     )}
                     <div className="absolute left-0 top-2 w-4 h-4 bg-[#007bff] rounded-full"></div>
                     <div>
-                      <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                      <h4 className="text-lg font-medium text-gray-900">
                         {exp.role}
                       </h4>
                       <p className="text-[#007bff] font-medium text-sm mb-1">
                         {exp.company}
                       </p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">
+                      <p className="text-gray-500 text-sm mb-2">
                         {exp.duration}
                       </p>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      <p className="text-gray-600 text-sm">
                         {exp.description}
                       </p>
                     </div>
@@ -504,15 +506,15 @@ export default function TalentProfilePage({ params }) {
             </div>
 
             {/* Portfolio */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Portfolio
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {talent.portfolio.map((project) => (
                   <div
                     key={project.id}
-                    className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden"
+                    className="border border-gray-200 rounded-lg overflow-hidden"
                   >
                     <img
                       src={project.image}
@@ -520,17 +522,17 @@ export default function TalentProfilePage({ params }) {
                       className="w-full h-32 object-cover"
                     />
                     <div className="p-4">
-                      <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+                      <h4 className="font-medium text-gray-900 mb-2">
                         {project.title}
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                      <p className="text-gray-600 text-sm mb-3">
                         {project.description}
                       </p>
                       <div className="flex flex-wrap gap-1 mb-3">
                         {project.technologies.map((tech, index) => (
                           <span
                             key={index}
-                            className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded"
+                            className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded"
                           >
                             {tech}
                           </span>
@@ -551,42 +553,42 @@ export default function TalentProfilePage({ params }) {
             </div>
 
             {/* Additional Info */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 Additional Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+                  <h4 className="font-medium text-gray-900 mb-2">
                     Languages
                   </h4>
-                  <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <ul className="text-gray-600 text-sm space-y-1">
                     {talent.languages.map((lang, index) => (
                       <li key={index}>{lang}</li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+                  <h4 className="font-medium text-gray-900 mb-2">
                     Work Style
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  <p className="text-gray-600 text-sm">
                     {talent.workStyle}
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+                  <h4 className="font-medium text-gray-900 mb-2">
                     Response Time
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  <p className="text-gray-600 text-sm">
                     {talent.responseTime}
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+                  <h4 className="font-medium text-gray-900 mb-2">
                     Experience Level
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  <p className="text-gray-600 text-sm">
                     {talent.experience}
                   </p>
                 </div>

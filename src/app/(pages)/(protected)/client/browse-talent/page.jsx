@@ -179,33 +179,33 @@ export default function BrowseTalentPage() {
   const isUnlocked = (talentId) => unlockedProfiles.has(talentId);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
             <a
-              href="/portal"
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              href="/client/dashboard"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               <ArrowLeft
                 size={20}
-                className="text-gray-600 dark:text-gray-400"
+                className="text-gray-600"
               />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Browse Talent
             </h1>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             Discover verified African talent across various specialties. Unlock
             profiles to access contact information.
           </p>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -218,7 +218,7 @@ export default function BrowseTalentPage() {
                 placeholder="Search by name, role, or skills..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               />
             </div>
 
@@ -227,7 +227,7 @@ export default function BrowseTalentPage() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               >
                 <option value="">All Categories</option>
                 {categories.map((category) => (
@@ -243,7 +243,7 @@ export default function BrowseTalentPage() {
               <select
                 value={selectedExperience}
                 onChange={(e) => setSelectedExperience(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               >
                 <option value="">All Experience</option>
                 {experienceLevels.map((level) => (
@@ -259,7 +259,7 @@ export default function BrowseTalentPage() {
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               >
                 <option value="">All Locations</option>
                 {locations.map((location) => (
@@ -274,7 +274,7 @@ export default function BrowseTalentPage() {
 
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             Showing {filteredTalents.length} talents
           </p>
         </div>
@@ -284,7 +284,7 @@ export default function BrowseTalentPage() {
           {filteredTalents.map((talent) => (
             <div
               key={talent.id}
-              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
               {/* Header */}
               <div className="flex items-start space-x-4 mb-4">
@@ -301,10 +301,10 @@ export default function BrowseTalentPage() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                  <h3 className="text-lg font-semibold text-gray-900 truncate">
                     {talent.name}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  <p className="text-gray-600 text-sm">
                     {talent.role}
                   </p>
                 </div>
@@ -312,11 +312,11 @@ export default function BrowseTalentPage() {
 
               {/* Location & Availability */}
               <div className="space-y-2 mb-4">
-                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-sm text-gray-600">
                   <MapPin size={14} className="mr-2" />
                   {talent.location}
                 </div>
-                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                <div className="flex items-center text-sm text-gray-600">
                   <Clock size={14} className="mr-2" />
                   {talent.availability}
                 </div>
@@ -328,13 +328,13 @@ export default function BrowseTalentPage() {
                   {talent.skills.slice(0, 3).map((skill, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-[#007bff] text-xs rounded-lg"
+                      className="px-2 py-1 bg-blue-50 text-[#007bff] text-xs rounded-lg"
                     >
                       {skill}
                     </span>
                   ))}
                   {talent.skills.length > 3 && (
-                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-lg">
+                    <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-lg">
                       +{talent.skills.length - 3} more
                     </span>
                   )}
@@ -346,27 +346,27 @@ export default function BrowseTalentPage() {
                 <div className="text-center">
                   <div className="flex items-center justify-center space-x-1 mb-1">
                     <Star size={14} className="text-yellow-400 fill-current" />
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="text-sm font-medium text-gray-900">
                       {talent.rating}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500">
                     Rating
                   </p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">
+                  <p className="text-sm font-medium text-gray-900 mb-1">
                     {talent.placements}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500">
                     Placements
                   </p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">
+                  <p className="text-sm font-medium text-gray-900 mb-1">
                     {talent.hourlyRate}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500">
                     Hourly Rate
                   </p>
                 </div>
@@ -375,8 +375,8 @@ export default function BrowseTalentPage() {
               {/* Action Buttons */}
               <div className="space-y-3">
                 <a
-                  href={`/portal/talent/${talent.id}`}
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                  href={`/client/talent/${talent.id}`}
+                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
                   <Eye size={16} className="mr-2" />
                   View Profile
@@ -410,7 +410,7 @@ export default function BrowseTalentPage() {
                   </>
                 ) : (
                   <div className="space-y-2">
-                    <div className="text-center py-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-sm font-medium rounded-lg">
+                    <div className="text-center py-2 bg-green-50 text-green-600 text-sm font-medium rounded-lg">
                       ✓ Contact Unlocked
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -418,7 +418,7 @@ export default function BrowseTalentPage() {
                         <Video size={14} className="mr-1" />
                         Book Meet
                       </button>
-                      <button className="inline-flex items-center justify-center px-3 py-2 border border-[#007bff] text-[#007bff] font-medium rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-200">
+                      <button className="inline-flex items-center justify-center px-3 py-2 border border-[#007bff] text-[#007bff] font-medium rounded-lg hover:bg-blue-50 transition-colors duration-200">
                         <MessageCircle size={14} className="mr-1" />
                         Message
                       </button>
@@ -433,13 +433,13 @@ export default function BrowseTalentPage() {
         {/* No Results */}
         {filteredTalents.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
               <Search size={24} className="text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
               No talents found
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600">
               Try adjusting your search criteria or browse all available talent.
             </p>
           </div>

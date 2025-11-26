@@ -144,11 +144,11 @@ export default function ActiveJobsPage() {
   const getStatusBadge = (status) => {
     const styles = {
       Active:
-        "bg-green-50 text-green-600 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800",
+        "bg-green-50 text-green-600 border-green-200",
       Inactive:
-        "bg-yellow-50 text-yellow-600 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800",
+        "bg-yellow-50 text-yellow-600 border-yellow-200",
       Closed:
-        "bg-gray-50 text-gray-600 border-gray-200 dark:bg-gray-900/20 dark:text-gray-400 dark:border-gray-800",
+        "bg-gray-50 text-gray-600 border-gray-200",
     };
 
     return (
@@ -208,31 +208,31 @@ export default function ActiveJobsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
             <a
               href="/client/dashboard"
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               <ArrowLeft
                 size={20}
-                className="text-gray-600 dark:text-gray-400"
+                className="text-gray-600"
               />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Active Jobs
             </h1>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             Manage your current job postings and review incoming applications.
           </p>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -245,7 +245,7 @@ export default function ActiveJobsPage() {
                 placeholder="Search job titles or descriptions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               />
             </div>
 
@@ -254,7 +254,7 @@ export default function ActiveJobsPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               >
                 {statusOptions.map((status) => (
                   <option key={status} value={status}>
@@ -269,7 +269,7 @@ export default function ActiveJobsPage() {
               <select
                 value={workTypeFilter}
                 onChange={(e) => setWorkTypeFilter(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               >
                 {workTypeOptions.map((type) => (
                   <option key={type} value={type}>
@@ -284,7 +284,7 @@ export default function ActiveJobsPage() {
               <select
                 value={locationFilter}
                 onChange={(e) => setLocationFilter(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent bg-white text-gray-900"
               >
                 {locationOptions.map((location) => (
                   <option key={location} value={location}>
@@ -298,7 +298,7 @@ export default function ActiveJobsPage() {
 
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             Showing {filteredJobs.length} job
             {filteredJobs.length !== 1 ? "s" : ""}
           </p>
@@ -309,7 +309,7 @@ export default function ActiveJobsPage() {
           {filteredJobs.map((job) => (
             <div
               key={job.id}
-              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition-shadow duration-200"
+              className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200"
             >
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 {/* Left Section - Job Info */}
@@ -317,39 +317,39 @@ export default function ActiveJobsPage() {
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
                     <div>
                       <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                        <h3 className="text-xl font-semibold text-gray-900">
                           {job.title}
                         </h3>
                         {getStatusBadge(job.status)}
                       </div>
-                      <p className="text-gray-600 dark:text-gray-300 mb-3 max-w-2xl">
+                      <p className="text-gray-600 mb-3 max-w-2xl">
                         {job.description}
                       </p>
                     </div>
 
                     {/* Dropdown Menu */}
                     <div className="relative group">
-                      <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                      <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                         <MoreVertical size={20} className="text-gray-500" />
                       </button>
-                      <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                      <div className="absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                         <button
                           onClick={() => handleEditJob(job)}
-                          className="w-full flex items-center space-x-2 px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 first:rounded-t-lg"
+                          className="w-full flex items-center space-x-2 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 first:rounded-t-lg"
                         >
                           <Edit3 size={14} />
                           <span>Edit Job</span>
                         </button>
                         <button
                           onClick={() => handleDuplicateJob(job)}
-                          className="w-full flex items-center space-x-2 px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          className="w-full flex items-center space-x-2 px-4 py-2 text-left text-gray-700 hover:bg-gray-50"
                         >
                           <Copy size={14} />
                           <span>Duplicate Job Post</span>
                         </button>
                         <button
                           onClick={() => handleCloseJob(job.id)}
-                          className="w-full flex items-center space-x-2 px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 last:rounded-b-lg"
+                          className="w-full flex items-center space-x-2 px-4 py-2 text-left text-red-600 hover:bg-red-50 last:rounded-b-lg"
                         >
                           <Archive size={14} />
                           <span>Close Job</span>
@@ -359,7 +359,7 @@ export default function ActiveJobsPage() {
                   </div>
 
                   {/* Job Details */}
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
                     <div className="flex items-center space-x-2">
                       <span className="font-medium">{job.workType}</span>
                     </div>
@@ -382,7 +382,7 @@ export default function ActiveJobsPage() {
                     {job.skills.map((skill, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-[#007bff] text-xs rounded-lg"
+                        className="px-2 py-1 bg-blue-50 text-[#007bff] text-xs rounded-lg"
                       >
                         {skill}
                       </span>
@@ -392,26 +392,26 @@ export default function ActiveJobsPage() {
                   {/* Stats Row */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <div className="text-lg font-semibold text-gray-900">
                         {job.pendingApplicants}
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-gray-500">
                         Pending Applicants
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-green-600 dark:text-green-400">
+                      <div className="text-lg font-semibold text-green-600">
                         {job.hired}
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-gray-500">
                         Hired
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-red-600 dark:text-red-400">
+                      <div className="text-lg font-semibold text-red-600">
                         {job.rejected}
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-gray-500">
                         Rejected
                       </div>
                     </div>
@@ -419,7 +419,7 @@ export default function ActiveJobsPage() {
                       <div className="text-lg font-semibold text-[#007bff]">
                         {job.matchPercentage}%
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-gray-500">
                         Match Percentage
                       </div>
                     </div>
@@ -428,9 +428,9 @@ export default function ActiveJobsPage() {
               </div>
 
               {/* Action Button */}
-              <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-end pt-4 border-t border-gray-200">
                 <a
-                  href={`/portal/candidates/${job.id}`}
+                  href={`/client/candidates/${job.id}`}
                   className="inline-flex items-center px-4 py-2 bg-[#007bff] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
                 >
                   <Eye size={16} className="mr-2" />
@@ -444,17 +444,17 @@ export default function ActiveJobsPage() {
         {/* No Results */}
         {filteredJobs.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
               <Search size={24} className="text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
               No jobs found
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               Try adjusting your search criteria or create a new job posting.
             </p>
             <a
-              href="/portal/hire-now"
+              href="/client/hire-now"
               className="inline-flex items-center px-4 py-2 bg-[#007bff] text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
             >
               Post New Job
@@ -466,14 +466,14 @@ export default function ActiveJobsPage() {
       {/* Edit Job Modal */}
       {isEditModalOpen && selectedJob && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full p-6">
+          <div className="bg-white rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-gray-900">
                 Edit Job: {selectedJob.title}
               </h3>
               <button
                 onClick={closeEditModal}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <X size={20} className="text-gray-500" />
               </button>
@@ -486,7 +486,7 @@ export default function ActiveJobsPage() {
                     alert("Edit job functionality would open full edit form");
                     closeEditModal();
                   }}
-                  className="flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="flex items-center justify-center px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
                   <Edit3 size={16} className="mr-2" />
                   <span>Edit Job</span>
@@ -496,7 +496,7 @@ export default function ActiveJobsPage() {
                     handleDuplicateJob(selectedJob);
                     closeEditModal();
                   }}
-                  className="flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                  className="flex items-center justify-center px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
                   <Copy size={16} className="mr-2" />
                   <span>Duplicate</span>

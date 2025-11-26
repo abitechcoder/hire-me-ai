@@ -143,35 +143,35 @@ export default function HireNowPage() {
 
   if (showSuccess) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-50">
         <Navigation />
 
         <main className="max-w-4xl mx-auto px-6 py-8">
           <div className="text-center py-16">
-            <div className="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mb-6">
+            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
               <CheckCircle
                 size={32}
-                className="text-green-600 dark:text-green-400"
+                className="text-green-600"
               />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">
               Job Request Submitted Successfully!
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-lg text-gray-600 mb-8">
               We'll start matching you with qualified candidates within 48
               hours. You'll receive an email notification when we have potential
               matches.
             </p>
             <div className="space-x-4">
               <a
-                href="/portal"
+                href="/client/dashboard"
                 className="inline-flex px-6 py-3 bg-[#007bff] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
               >
                 Back to Dashboard
               </a>
               <a
-                href="/portal/active-jobs"
-                className="inline-flex px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                href="/client/active-jobs"
+                className="inline-flex px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 View Active Jobs
               </a>
@@ -183,7 +183,7 @@ export default function HireNowPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
 
       <main className="max-w-4xl mx-auto px-6 py-8">
         {/* Header */}
@@ -191,18 +191,18 @@ export default function HireNowPage() {
           <div className="flex items-center space-x-4 mb-4">
             <a
               href="/client/dashboard"
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               <ArrowLeft
                 size={20}
-                className="text-gray-600 dark:text-gray-400"
+                className="text-gray-600"
               />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Post a New Job
             </h1>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             Fill out the details below to get matched with qualified candidates
             within 48 hours.
           </p>
@@ -211,12 +211,12 @@ export default function HireNowPage() {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8"
+          className="bg-white rounded-xl border border-gray-200 p-8"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Work Type */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Work Type *
               </label>
               <select
@@ -226,8 +226,8 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.workType
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               >
                 <option value="">Select work type</option>
                 {workTypeOptions.map((option) => (
@@ -237,7 +237,7 @@ export default function HireNowPage() {
                 ))}
               </select>
               {errors.workType && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.workType}
                 </p>
               )}
@@ -245,7 +245,7 @@ export default function HireNowPage() {
 
             {/* Job Title */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Job Title *
               </label>
               <input
@@ -257,11 +257,11 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.jobTitle
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               />
               {errors.jobTitle && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.jobTitle}
                 </p>
               )}
@@ -269,7 +269,7 @@ export default function HireNowPage() {
 
             {/* Job Description */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Job Description / Project Info *
               </label>
               <textarea
@@ -281,11 +281,11 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.jobDescription
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               />
               {errors.jobDescription && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.jobDescription}
                 </p>
               )}
@@ -293,7 +293,7 @@ export default function HireNowPage() {
 
             {/* Average Hours */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Average Hours Required *
               </label>
               <input
@@ -307,11 +307,11 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.averageHours
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               />
               {errors.averageHours && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.averageHours}
                 </p>
               )}
@@ -319,7 +319,7 @@ export default function HireNowPage() {
 
             {/* Payment Frequency */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Payment Frequency *
               </label>
               <select
@@ -329,8 +329,8 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.paymentFrequency
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               >
                 <option value="">Select payment frequency</option>
                 {paymentFrequencyOptions.map((option) => (
@@ -340,7 +340,7 @@ export default function HireNowPage() {
                 ))}
               </select>
               {errors.paymentFrequency && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.paymentFrequency}
                 </p>
               )}
@@ -348,7 +348,7 @@ export default function HireNowPage() {
 
             {/* Salary/Budget */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Salary/Budget *
               </label>
               <input
@@ -360,11 +360,11 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.salaryBudget
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               />
               {errors.salaryBudget && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.salaryBudget}
                 </p>
               )}
@@ -372,7 +372,7 @@ export default function HireNowPage() {
 
             {/* Experience Level */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Experience Level *
               </label>
               <select
@@ -382,8 +382,8 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.experienceLevel
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               >
                 <option value="">Select experience level</option>
                 {experienceLevelOptions.map((option) => (
@@ -393,7 +393,7 @@ export default function HireNowPage() {
                 ))}
               </select>
               {errors.experienceLevel && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.experienceLevel}
                 </p>
               )}
@@ -401,7 +401,7 @@ export default function HireNowPage() {
 
             {/* Skills Needed */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Skills Needed *
               </label>
               <div className="flex flex-wrap gap-2 mb-3">
@@ -428,7 +428,7 @@ export default function HireNowPage() {
                   onChange={(e) => setNewSkill(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && addSkill(e)}
                   placeholder="Add a skill (e.g. React, Python, etc.)"
-                  className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors bg-white text-gray-900"
                 />
                 <button
                   type="button"
@@ -439,7 +439,7 @@ export default function HireNowPage() {
                 </button>
               </div>
               {errors.skillsNeeded && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.skillsNeeded}
                 </p>
               )}
@@ -447,7 +447,7 @@ export default function HireNowPage() {
 
             {/* Requirements */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Requirements *
               </label>
               <textarea
@@ -459,11 +459,11 @@ export default function HireNowPage() {
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
                   errors.requirements
                     ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    : "border-gray-300"
+                } bg-white text-gray-900`}
               />
               {errors.requirements && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1 text-sm text-red-600">
                   {errors.requirements}
                 </p>
               )}
@@ -471,7 +471,7 @@ export default function HireNowPage() {
 
             {/* Number of Professionals */}
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Number of Professionals Needed
               </label>
               <input
@@ -481,7 +481,7 @@ export default function HireNowPage() {
                 onChange={handleInputChange}
                 min="1"
                 max="20"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors bg-white text-gray-900"
               />
             </div>
           </div>
@@ -489,8 +489,8 @@ export default function HireNowPage() {
           {/* Submit Button */}
           <div className="mt-8 flex justify-end space-x-4">
             <a
-              href="/portal"
-              className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+              href="/client/dashboard"
+              className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               Cancel
             </a>

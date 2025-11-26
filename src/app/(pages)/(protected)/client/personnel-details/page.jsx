@@ -232,20 +232,20 @@ export default function PersonnelManagementPage() {
   const getContractStatusColor = (status) => {
     const colors = {
       "Full-time":
-        "bg-green-50 text-green-600 border-green-200 dark:bg-green-900/20 dark:text-green-400",
+        "bg-green-50 text-green-600 border-green-200",
       Contract:
-        "bg-blue-50 text-blue-600 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400",
+        "bg-blue-50 text-blue-600 border-blue-200",
       "Part-time":
-        "bg-yellow-50 text-yellow-600 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400",
+        "bg-yellow-50 text-yellow-600 border-yellow-200",
     };
     return (
       colors[status] ||
-      "bg-gray-50 text-gray-600 border-gray-200 dark:bg-gray-900/20 dark:text-gray-400"
+      "bg-gray-50 text-gray-600 border-gray-200"
     );
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
@@ -253,25 +253,25 @@ export default function PersonnelManagementPage() {
           <div className="flex items-center space-x-4 mb-4">
             <a
               href="/client/dashboard"
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               <ArrowLeft
                 size={20}
-                className="text-gray-600 dark:text-gray-400"
+                className="text-gray-600"
               />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Personnel Management
             </h1>
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600">
             Manage your team members, track progress, and oversee projects.
           </p>
         </div>
 
         {/* Tabs */}
         <div className="mb-8">
-          <div className="border-b border-gray-200 dark:border-gray-700">
+          <div className="border-b border-gray-200">
             <nav className="-mb-px flex space-x-8">
               {tabs.map((tab) => {
                 const IconComponent = tab.icon;
@@ -279,11 +279,10 @@ export default function PersonnelManagementPage() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
-                      activeTab === tab.id
+                    className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${activeTab === tab.id
                         ? "border-[#007bff] text-[#007bff]"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                    }`}
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                      }`}
                   >
                     <IconComponent size={16} />
                     <span>{tab.name}</span>
@@ -298,36 +297,36 @@ export default function PersonnelManagementPage() {
         {activeTab === "personnel" && (
           <div>
             {/* Personnel Table */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 dark:bg-gray-700">
+                  <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Employee
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Contact
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Payment Info
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Start Date
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  <tbody className="divide-y divide-gray-200">
                     {personnel.map((employee) => (
                       <tr
                         key={employee.id}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                        className="hover:bg-gray-50 cursor-pointer"
                         onClick={() => {
                           setSelectedEmployee(employee);
                           setIsEmployeeModalOpen(true);
@@ -341,24 +340,24 @@ export default function PersonnelManagementPage() {
                               alt={employee.name}
                             />
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900 dark:text-white">
+                              <div className="text-sm font-medium text-gray-900">
                                 {employee.name}
                               </div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">
+                              <div className="text-sm text-gray-500">
                                 {employee.role}
                               </div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900 dark:text-white">
+                          <div className="text-sm text-gray-900">
                             {employee.phone}
                           </div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                          <div className="text-sm text-gray-500">
                             {employee.email}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {employee.paymentInfo}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -368,7 +367,7 @@ export default function PersonnelManagementPage() {
                             {employee.contractStatus}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {formatDate(employee.startDate)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -424,10 +423,10 @@ export default function PersonnelManagementPage() {
           <div>
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-900">
                   Weekly Check-ins
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600">
                   Review team progress and upcoming plans
                 </p>
               </div>
@@ -444,14 +443,14 @@ export default function PersonnelManagementPage() {
               {weeklyCheckins.map((checkin) => (
                 <div
                   key={checkin.id}
-                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6"
+                  className="bg-white rounded-xl border border-gray-200 p-6"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <h4 className="text-lg font-semibold text-gray-900">
                         {checkin.employeeName} - {checkin.week}
                       </h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500">
                         Submitted on {formatDate(checkin.submittedDate)}
                       </p>
                     </div>
@@ -459,7 +458,7 @@ export default function PersonnelManagementPage() {
                       <div className="text-2xl font-bold text-[#007bff]">
                         {checkin.hoursWorked}hrs
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-gray-500">
                         Hours Worked
                       </div>
                     </div>
@@ -467,7 +466,7 @@ export default function PersonnelManagementPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <h5 className="font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+                      <h5 className="font-medium text-gray-900 mb-3 flex items-center">
                         <CheckCircle
                           size={16}
                           className="mr-2 text-green-600"
@@ -478,7 +477,7 @@ export default function PersonnelManagementPage() {
                         {checkin.goalsAchieved.map((goal, index) => (
                           <li
                             key={index}
-                            className="text-sm text-gray-600 dark:text-gray-300 flex items-start"
+                            className="text-sm text-gray-600 flex items-start"
                           >
                             <span className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                             {goal}
@@ -488,7 +487,7 @@ export default function PersonnelManagementPage() {
                     </div>
 
                     <div>
-                      <h5 className="font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+                      <h5 className="font-medium text-gray-900 mb-3 flex items-center">
                         <Target size={16} className="mr-2 text-blue-600" />
                         Goals Planned
                       </h5>
@@ -496,7 +495,7 @@ export default function PersonnelManagementPage() {
                         {checkin.goalsPlanned.map((goal, index) => (
                           <li
                             key={index}
-                            className="text-sm text-gray-600 dark:text-gray-300 flex items-start"
+                            className="text-sm text-gray-600 flex items-start"
                           >
                             <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                             {goal}
@@ -506,24 +505,24 @@ export default function PersonnelManagementPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <h5 className="font-medium text-gray-900 mb-3">
                       Company Alignment
                     </h5>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
-                        <div className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-1">
+                      <div className="bg-blue-50">
+                        <div className="text-sm font-medium text-blue-800 mb-1">
                           Monthly Goals
                         </div>
-                        <div className="text-sm text-blue-700 dark:text-blue-400">
+                        <div className="text-sm text-blue-700">
                           {checkin.alignment.monthly}
                         </div>
                       </div>
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                        <div className="text-sm font-medium text-green-800 dark:text-green-300 mb-1">
+                      <div className="bg-green-50 p-3 rounded-lg">
+                        <div className="text-sm font-medium text-green-800 mb-1">
                           Yearly Objectives
                         </div>
-                        <div className="text-sm text-green-700 dark:text-green-400">
+                        <div className="t">
                           {checkin.alignment.yearly}
                         </div>
                       </div>
@@ -539,10 +538,10 @@ export default function PersonnelManagementPage() {
           <div>
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-900">
                   Projects
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600">
                   Track project progress and team assignments
                 </p>
               </div>
@@ -559,16 +558,16 @@ export default function PersonnelManagementPage() {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6"
+                  className="bg-white rounded-xl border border-gray-200 p-6"
                 >
                   <div className="mb-4">
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">
                       {project.title}
                     </h4>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                    <p className="text-gray-600 text-sm mb-3">
                       {project.description}
                     </p>
-                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center justify-between text-sm text-gray-500">
                       <span>{project.timeline}</span>
                       <span>Due: {formatDate(project.dueDate)}</span>
                     </div>
@@ -577,14 +576,14 @@ export default function PersonnelManagementPage() {
                   {/* Progress */}
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="text-sm font-medium text-gray-700">
                         Progress
                       </span>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="text-sm font-medium text-gray-900">
                         {project.progress}%
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full ${getProgressBarColor(project.progress)}`}
                         style={{ width: `${project.progress}%` }}
@@ -594,14 +593,14 @@ export default function PersonnelManagementPage() {
 
                   {/* KPIs */}
                   <div className="mb-4">
-                    <h5 className="font-medium text-gray-900 dark:text-white mb-2">
+                    <h5 className="font-medium text-gray-900 mb-2">
                       Key Performance Indicators
                     </h5>
                     <ul className="space-y-1">
                       {project.kpis.map((kpi, index) => (
                         <li
                           key={index}
-                          className="text-sm text-gray-600 dark:text-gray-300 flex items-center"
+                          className="text-sm text-gray-600 flex items-center"
                         >
                           <TrendingUp
                             size={14}
@@ -615,7 +614,7 @@ export default function PersonnelManagementPage() {
 
                   {/* Team Members */}
                   <div className="mb-4">
-                    <h5 className="font-medium text-gray-900 dark:text-white mb-2 flex items-center">
+                    <h5 className="font-medium text-gray-900 mb-2 flex items-center">
                       <UsersIcon size={16} className="mr-2" />
                       Team Members ({project.teamMembers.length})
                     </h5>
@@ -623,7 +622,7 @@ export default function PersonnelManagementPage() {
                       {project.teamMembers.map((member, index) => (
                         <span
                           key={index}
-                          className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs rounded-lg"
+                          className="px-2 py-1 bg-blue-50:text-blue-300 text-xs rounded-lg"
                         >
                           {member}
                         </span>
@@ -634,11 +633,10 @@ export default function PersonnelManagementPage() {
                   {/* Status */}
                   <div className="flex items-center justify-between">
                     <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        project.status === "In Progress"
-                          ? "bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:text-blue-400"
-                          : "bg-green-50 text-green-600 border border-green-200 dark:bg-green-900/20 dark:text-green-400"
-                      }`}
+                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${project.status === "In Progress"
+                          ? "bg-blue-50 text-blue-600 border border-blue-200"
+                          : "bg-green-50 text-green-600 border border-green-200"
+                        }`}
                     >
                       {project.status}
                     </span>
@@ -653,14 +651,14 @@ export default function PersonnelManagementPage() {
       {/* Employee Detail Modal */}
       {isEmployeeModalOpen && selectedEmployee && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900">
                 Employee Details
               </h3>
               <button
                 onClick={() => setIsEmployeeModalOpen(false)}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <X size={20} className="text-gray-500" />
               </button>
@@ -674,10 +672,10 @@ export default function PersonnelManagementPage() {
                   alt={selectedEmployee.name}
                 />
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <h4 className="text-lg font-semibold text-gray-900">
                     {selectedEmployee.name}
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-gray-600">
                     {selectedEmployee.role}
                   </p>
                 </div>
@@ -685,7 +683,7 @@ export default function PersonnelManagementPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h5 className="font-medium text-gray-900 mb-3">
                     Contact Information
                   </h5>
                   <div className="space-y-2 text-sm">
@@ -699,7 +697,7 @@ export default function PersonnelManagementPage() {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h5 className="font-medium text-gray-900 mb-3">
                     Contract Details
                   </h5>
                   <div className="space-y-2 text-sm">
@@ -717,14 +715,14 @@ export default function PersonnelManagementPage() {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h5 className="font-medium text-gray-900 mb-3">
                     Skills
                   </h5>
                   <div className="flex flex-wrap gap-2">
                     {selectedEmployee.skills.map((skill, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs rounded-lg"
+                        className="px-2 py-1 bg-blue-50:text-blue-300 text-xs rounded-lg"
                       >
                         {skill}
                       </span>
@@ -733,28 +731,28 @@ export default function PersonnelManagementPage() {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h5 className="font-medium text-gray-900 mb-3">
                     Work Schedule
                   </h5>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-gray-600">
                     {selectedEmployee.workSchedule}
                   </p>
                 </div>
 
                 <div className="md:col-span-2">
-                  <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h5 className="font-medium text-gray-900 mb-3">
                     Current Deliverables
                   </h5>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-gray-600">
                     {selectedEmployee.deliverables}
                   </p>
                 </div>
 
                 <div className="md:col-span-2">
-                  <h5 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <h5 className="font-medium text-gray-900 mb-3">
                     Current Project
                   </h5>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-gray-600">
                     {selectedEmployee.currentProject}
                   </p>
                 </div>
@@ -767,21 +765,21 @@ export default function PersonnelManagementPage() {
       {/* Action Modal */}
       {isActionModalOpen && selectedEmployee && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full p-6">
+          <div className="bg-white rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {actionType.charAt(0).toUpperCase() + actionType.slice(1)}{" "}
                 Employee
               </h3>
               <button
                 onClick={closeActionModal}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <X size={20} className="text-gray-500" />
               </button>
             </div>
 
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               You are about to {actionType}{" "}
               <strong>{selectedEmployee.name}</strong>.
               {actionType === "terminate" && " This action cannot be undone."}
@@ -795,18 +793,17 @@ export default function PersonnelManagementPage() {
                   );
                   closeActionModal();
                 }}
-                className={`flex-1 px-4 py-2 font-medium rounded-lg transition-colors duration-200 ${
-                  actionType === "terminate"
+                className={`flex-1 px-4 py-2 font-medium rounded-lg transition-colors duration-200 ${actionType === "terminate"
                     ? "bg-red-600 text-white hover:bg-red-700"
                     : "bg-[#007bff] text-white hover:bg-blue-600"
-                }`}
+                  }`}
               >
                 Confirm{" "}
                 {actionType.charAt(0).toUpperCase() + actionType.slice(1)}
               </button>
               <button
                 onClick={closeActionModal}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 Cancel
               </button>
@@ -818,20 +815,20 @@ export default function PersonnelManagementPage() {
       {/* Create Modal */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-md w-full p-6">
+          <div className="bg-white rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-gray-900">
                 Create New {createType === "checkin" ? "Check-in" : "Project"}
               </h3>
               <button
                 onClick={closeCreateModal}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
                 <X size={20} className="text-gray-500" />
               </button>
             </div>
 
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               {createType === "checkin"
                 ? "Create a new weekly check-in form for team members to fill out."
                 : "Create a new project to track progress and assign team members."}
@@ -849,7 +846,7 @@ export default function PersonnelManagementPage() {
               </button>
               <button
                 onClick={closeCreateModal}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
                 Cancel
               </button>

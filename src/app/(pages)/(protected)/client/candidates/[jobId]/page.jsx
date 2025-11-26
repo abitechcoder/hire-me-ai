@@ -14,8 +14,10 @@ import {
   Filter,
   Search,
 } from "lucide-react";
+import { useParams } from "next/navigation";
 
-export default function CandidatesPage({ params }) {
+export default function CandidatesPage() {
+  const params = useParams();
   const [job, setJob] = useState(null);
   const [candidates, setCandidates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -236,10 +238,10 @@ export default function CandidatesPage({ params }) {
   };
 
   const getMatchScoreColor = (score) => {
-    if (score >= 90) return "text-green-600 dark:text-green-400";
-    if (score >= 80) return "text-blue-600 dark:text-blue-400";
-    if (score >= 70) return "text-yellow-600 dark:text-yellow-400";
-    return "text-red-600 dark:text-red-400";
+    if (score >= 90) return "text-green-600";
+    if (score >= 80) return "text-blue-600";
+    if (score >= 70) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const sections = [
@@ -262,17 +264,16 @@ export default function CandidatesPage({ params }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Navigation />
+      <div className="min-h-screen bg-gray-50">
         <main className="max-w-7xl mx-auto px-6 py-8">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded mb-6 w-1/3"></div>
-            <div className="h-32 bg-gray-300 dark:bg-gray-700 rounded mb-6"></div>
+            <div className="h-8 bg-gray-300 rounded mb-6 w-1/3"></div>
+            <div className="h-32 bg-gray-300 rounded mb-6"></div>
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="h-24 bg-gray-300 dark:bg-gray-700 rounded"
+                  className="h-24 bg-gray-300 rounded"
                 ></div>
               ))}
             </div>
@@ -284,17 +285,17 @@ export default function CandidatesPage({ params }) {
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-50">
         <main className="max-w-7xl mx-auto px-6 py-8">
           <div className="text-center py-12">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
               Job Not Found
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-600 mb-6">
               The job you're looking for doesn't exist.
             </p>
             <a
-              href="/portal/active-jobs"
+              href="/client/active-jobs"
               className="inline-flex items-center px-4 py-2 bg-[#007bff] text-white rounded-lg hover:bg-blue-600 transition-colors duration-200"
             >
               <ArrowLeft size={16} className="mr-2" />
@@ -307,42 +308,40 @@ export default function CandidatesPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Navigation />
-
+    <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
             <a
-              href="/portal/active-jobs"
-              className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              href="/client/active-jobs"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors duration-200"
             >
               <ArrowLeft
                 size={20}
-                className="text-gray-600 dark:text-gray-400"
+                className="text-gray-600"
               />
             </a>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Candidates for {job.title}
             </h1>
           </div>
         </div>
 
         {/* Job Info Header */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
             <div>
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">
                 {job.title}
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 mb-4">
                 {job.description}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300 mb-4">
+          <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
             <div className="flex items-center space-x-2">
               <span className="font-medium">{job.workType}</span>
             </div>
@@ -360,28 +359,28 @@ export default function CandidatesPage({ params }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="text-2xl font-bold text-gray-900">
                 {candidates.length}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-gray-500">
                 Total Applicants
               </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+              <div className="text-2xl font-bold text-green-600">
                 {getCandidatesByStatus("hired").length}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-gray-500">
                 Hired
               </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+              <div className="text-2xl font-bold text-yellow-600">
                 {getCandidatesByStatus("pending").length}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-gray-500">
                 Pending Review
               </div>
             </div>
@@ -390,7 +389,7 @@ export default function CandidatesPage({ params }) {
 
         {/* Section Tabs */}
         <div className="mb-8">
-          <div className="border-b border-gray-200 dark:border-gray-700">
+          <div className="border-b border-gray-200">
             <nav className="-mb-px flex space-x-8">
               {sections.map((section) => (
                 <button
@@ -399,11 +398,11 @@ export default function CandidatesPage({ params }) {
                   className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
                     activeSection === section.id
                       ? "border-[#007bff] text-[#007bff]"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
                   {section.name}
-                  <span className="ml-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">
+                  <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2 rounded-full text-xs">
                     {section.count}
                   </span>
                 </button>
@@ -417,7 +416,7 @@ export default function CandidatesPage({ params }) {
           {getCandidatesByStatus(activeSection).map((candidate) => (
             <div
               key={candidate.id}
-              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition-shadow duration-200"
+              className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200"
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                 {/* Candidate Info */}
@@ -428,13 +427,13 @@ export default function CandidatesPage({ params }) {
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       {candidate.name}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-1">
+                    <p className="text-gray-600 text-sm mb-1">
                       {candidate.role}
                     </p>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">
+                    <p className="text-gray-500 text-sm mb-2">
                       {candidate.location} • {candidate.experience} experience
                     </p>
 
@@ -443,19 +442,19 @@ export default function CandidatesPage({ params }) {
                       {candidate.skills.slice(0, 4).map((skill, index) => (
                         <span
                           key={index}
-                          className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-[#007bff] text-xs rounded-lg"
+                          className="px-2 py-1 bg-blue-50 text-[#007bff] text-xs rounded-lg"
                         >
                           {skill}
                         </span>
                       ))}
                       {candidate.skills.length > 4 && (
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-lg">
+                        <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-lg">
                           +{candidate.skills.length - 4} more
                         </span>
                       )}
                     </div>
 
-                    <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-300">
+                    <div className="flex items-center space-x-4 text-sm text-gray-600">
                       <div className="flex items-center space-x-1">
                         <Star
                           size={14}
@@ -477,15 +476,15 @@ export default function CandidatesPage({ params }) {
                     >
                       {candidate.matchScore}%
                     </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="text-sm text-gray-500">
                       Match
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-3">
                     <a
-                      href={`/portal/talent/${candidate.id}`}
-                      className="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                      href={`/client/talent/${candidate.id}`}
+                      className="inline-flex items-center px-3 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
                     >
                       <Eye size={14} className="mr-1" />
                       View Profile
@@ -511,17 +510,17 @@ export default function CandidatesPage({ params }) {
                     )}
 
                     {candidate.status === "hired" && candidate.hiredDate && (
-                      <div className="text-green-600 dark:text-green-400 text-sm font-medium">
+                      <div className="text-green-600 text-sm font-medium">
                         ✓ Hired on {formatDate(candidate.hiredDate)}
                       </div>
                     )}
 
                     {candidate.status === "rejected" &&
                       candidate.rejectedDate && (
-                        <div className="text-red-600 dark:text-red-400 text-sm">
+                        <div className="text-red-600 text-sm">
                           ✗ Rejected on {formatDate(candidate.rejectedDate)}
                           {candidate.rejectedReason && (
-                            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            <div className="text-xs text-gray-500 mt-1">
                               {candidate.rejectedReason}
                             </div>
                           )}
@@ -537,14 +536,14 @@ export default function CandidatesPage({ params }) {
         {/* Empty State */}
         {getCandidatesByStatus(activeSection).length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
               <Users size={24} className="text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
               No candidates in{" "}
               {sections.find((s) => s.id === activeSection)?.name.toLowerCase()}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600">
               {activeSection === "pending"
                 ? "New candidates will appear here as they apply."
                 : `No candidates have been ${activeSection} yet.`}
