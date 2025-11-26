@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Building,
@@ -8,15 +8,22 @@ import {
   User,
   DollarSign,
   Link,
-  CircleDollarSign
+  CircleDollarSign,
+  LockKeyhole
 } from "lucide-react";
+import appwriteService from "@/appwrite/config";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
 export default function ClientSignupPage() {
+  const router = useRouter();
+  const { authStatus, setAuthStatus } = useAuth();
   const [formData, setFormData] = useState({
     companyName: "",
     industry: "",
     contactPerson: "",
     email: "",
+    password: "",
     roleRequirements: "",
     budget: "",
     linkedInUrl: "",
@@ -58,7 +65,6 @@ export default function ClientSignupPage() {
     setIsSubmitting(true);
 
     try {
-      console.log(formData)
       const response = await fetch("/api/clients", {
         method: "POST",
         headers: {
@@ -73,7 +79,12 @@ export default function ClientSignupPage() {
         );
       }
 
-      setSubmitted(true);
+      const user = await appwriteService.createUser({email: formData.email, password: formData.password, name: formData.contactPerson});
+      if (user) {
+        setSubmitted(true);
+        setAuthStatus(true);
+      }
+      
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("There was an error submitting your form. Please try again.");
@@ -81,6 +92,13 @@ export default function ClientSignupPage() {
       setIsSubmitting(false);
     }
   };
+
+  // Redirect authenticated clients to dashboard when authStatus changes
+  useEffect(() => {
+    if (authStatus) {
+        router.replace('/client/dashboard');
+    }
+  }, [authStatus, router]);
 
   if (submitted) {
     return (
@@ -135,6 +153,16 @@ export default function ClientSignupPage() {
               </a>
             </div>
           </div>
+          <div className="mt-8">
+              <a
+                href="/dashboard"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                Go to Dashboard
+                <ArrowRight size={20} className="ml-2" />
+              </a>
+            </div>
         </div>
       </div>
     );
@@ -216,30 +244,30 @@ export default function ClientSignupPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Contact Person */}
-              <div>
-                <label
-                  htmlFor="contactPerson"
-                  className="block text-sm font-semibold text-gray-900 mb-3"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  <User size={16} className="inline mr-2" />
-                  Contact Person *
-                </label>
-                <input
-                  type="text"
-                  id="contactPerson"
-                  name="contactPerson"
-                  required
-                  value={formData.contactPerson}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="Your full name"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                />
-              </div>
+            {/* Contact Person */}
+            <div>
+              <label
+                htmlFor="contactPerson"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <User size={16} className="inline mr-2" />
+                Contact Person *
+              </label>
+              <input
+                type="text"
+                id="contactPerson"
+                name="contactPerson"
+                required
+                value={formData.contactPerson}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Your full name"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
+            </div>
 
+            <div className="grid md:grid-cols-2 gap-6">
               {/* Email */}
               <div>
                 <label
@@ -259,6 +287,29 @@ export default function ClientSignupPage() {
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   placeholder="your@company.com"
+                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-gray-900 mb-3"
+                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+                >
+                  <LockKeyhole size={16} className="inline mr-2" />
+                  Password *
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  placeholder="Enter password"
                   style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                 />
               </div>
@@ -304,9 +355,9 @@ export default function ClientSignupPage() {
                 value={
                   formData.budget
                     ? new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      }).format(formData.budget)
+                      style: "currency",
+                      currency: "USD",
+                    }).format(formData.budget)
                     : ""
                 } // Format the value for display
                 onChange={handleBudgetChange} // Use the updated handler

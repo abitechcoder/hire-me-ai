@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
-import TalentCard from "../../components/TalentCard";
+import TalentCard from "@/components/TalentCard";
 
 export default function BrowseTalentPage() {
   const [searchTerm, setSearchTerm] = useState("");

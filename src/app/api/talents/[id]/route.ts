@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { BASE } from '../../../../../airtable';
+import { BASE } from '@/airtable/config';
 
 export async function GET(request: Request,
     { params }: { params: Promise<{ id: string }> }) {
