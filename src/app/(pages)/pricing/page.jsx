@@ -460,58 +460,6 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* Add-ons Section */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h2
-                className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                Essential Add-Ons
-              </h2>
-              <p
-                className="text-lg text-gray-600 max-w-2xl mx-auto"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                Enhance your experience with additional services and support
-                options.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {addOns.map((addon, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                      <Plus size={24} className="text-blue-600" />
-                    </div>
-                    <span
-                      className="text-lg font-bold text-blue-600"
-                      style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                    >
-                      {addon.price}
-                    </span>
-                  </div>
-                  <h3
-                    className="text-lg font-semibold text-gray-900 mb-2"
-                    style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                  >
-                    {addon.name}
-                  </h3>
-                  <p
-                    className="text-gray-600 text-sm"
-                    style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                  >
-                    {addon.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Multi-Talent Discount */}
           <div className="bg-linear-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white text-center">
             <h2

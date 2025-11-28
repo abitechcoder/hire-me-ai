@@ -11,6 +11,7 @@ import {
   Calendar,
   TrendingUp,
 } from "lucide-react";
+import appwriteService from "@/appwrite/config";
 
 type RecentActivityType = {
     id: number;
@@ -22,9 +23,14 @@ type RecentActivityType = {
 
 export default function Dashboard() {
   const [recentActivity, setRecentActivity] = useState<RecentActivityType[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   // Sample recent activity data
   useEffect(() => {
+    (async () => {
+      const userData = await appwriteService.getCurrentUser();
+      setUser(userData);
+    })()
     setRecentActivity([
       {
         id: 1,
@@ -106,7 +112,7 @@ export default function Dashboard() {
         {/* Welcome Banner */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome, Client
+            Welcome, {user ? user.name?.split(" ")[0] : 'Client'}!
           </h1>
           <p className="text-lg text-gray-600">
             Manage your job posts, view matches, and hire verified African

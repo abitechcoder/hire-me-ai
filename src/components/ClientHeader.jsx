@@ -65,7 +65,7 @@ export default function Navigation() {
             <div className="flex items-center space-x-8">
               {/* Logo */}
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-[#007bff] rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-sm">H</span>
                 </div>
                 <span className="text-xl font-semibold text-gray-900">
@@ -80,13 +80,13 @@ export default function Navigation() {
                     key={item.key}
                     href={item.href}
                     className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActiveRoute(item.href)
-                        ? "text-[#007bff] bg-blue-50"
+                        ? "text-primary bg-blue-50"
                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                   >
                     {item.name}
                     {isActiveRoute(item.href) && (
-                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-[#007bff] rounded-full"></div>
+                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"></div>
                     )}
                   </a>
                 ))}
@@ -101,7 +101,7 @@ export default function Navigation() {
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   className="flex items-center cursor-pointer space-x-2 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <div className="w-8 h-8 bg-[#007bff] rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                     <User size={16} className="text-white" />
                   </div>
                   <span className="text-sm">{user.name?.split(" ")[0]}</span>
@@ -115,24 +115,24 @@ export default function Navigation() {
                 {/* Profile Dropdown Menu */}
                 {isProfileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
-                    {/* <a
+                    <a
                     href="/client/settings"
-                    className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
                     <Settings size={16} />
-                    <span>Account / KYC Settings</span>
+                    <span>Account Settings</span>
                   </a>
                   <a
                     href="/client/help"
-                    className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   >
                     <HelpCircle size={16} />
                     <span>Help & Support</span>
                   </a>
-                  <hr className="my-2 border-gray-200" /> */}
+                  <hr className="my-2 border-gray-200" />
                     <button
                       onClick={handleLogout}
-                      className="flex items-center space-x-3 px-4 py-2 text-sm text-red-600 w-full text-left"
+                      className="flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-100 w-full text-left cursor-pointer"
                     >
                       <LogOut size={16} />
                       <span>Logout</span>
@@ -164,7 +164,7 @@ export default function Navigation() {
                     key={item.key}
                     href={item.href}
                     className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActiveRoute(item.href)
-                        ? "text-[#007bff] bg-blue-50"
+                        ? "text-primary bg-blue-50"
                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -181,7 +181,7 @@ export default function Navigation() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Settings size={16} />
-                <span>Account / KYC Settings</span>
+                <span>Account Settings</span>
               </a>
               <a
                 href="/client/help"

@@ -45,8 +45,7 @@ class AppwriteService {
 
             return session;
         } catch (error) {
-            // throw error;
-            return null
+            throw error;
         }
     }
 

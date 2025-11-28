@@ -2,7 +2,7 @@ import { ArrowRight, Globe, Shield, Zap } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="pt-20 pb-16 md:pt-28 md:pb-24 px-6 bg-white relative overflow-hidden">
+    <section className="pt-10 pb-16 md:pb-24 px-6 bg-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Gradient circles */}
@@ -103,7 +103,7 @@ export default function Hero() {
           <div className="relative">
             <div className="relative mx-auto max-w-lg lg:max-w-none">
               {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl p-8 lg:p-12">
+              <div className="relative bg-linear-to-br from-blue-50 to-green-50 rounded-2xl p-8 lg:p-12">
                 <img
                   src="https://images.unsplash.com/photo-1664575198308-3959904fa430?w=600&h=600&fit=crop&crop=face&auto=format&q=80"
                   alt="Professional African talent working on laptop"
