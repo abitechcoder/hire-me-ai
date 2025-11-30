@@ -138,8 +138,8 @@ export default function PricingPage() {
             <button
               onClick={() => setBillingCycle("monthly")}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${billingCycle === "monthly"
-                  ? "bg-white text-gray-900 shadow-sm"
-                  : "text-gray-600"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-600"
                 }`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
@@ -148,8 +148,8 @@ export default function PricingPage() {
             <button
               onClick={() => setBillingCycle("quarterly")}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${billingCycle === "quarterly"
-                  ? "bg-white text-gray-900 shadow-sm"
-                  : "text-gray-600"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-600"
                 }`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
@@ -161,8 +161,8 @@ export default function PricingPage() {
             <button
               onClick={() => setBillingCycle("annual")}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${billingCycle === "annual"
-                  ? "bg-white text-gray-900 shadow-sm"
-                  : "text-gray-600"
+                ? "bg-white text-gray-900 shadow-sm"
+                : "text-gray-600"
                 }`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
@@ -180,8 +180,8 @@ export default function PricingPage() {
             <div
               key={planKey}
               className={`relative bg-white border-2 rounded-2xl p-8 transition-all duration-300 hover:shadow-xl ${planKey === "growth"
-                  ? "border-blue-500 shadow-lg scale-105"
-                  : "border-gray-200 hover:border-gray-300"
+                ? "border-blue-500 shadow-lg scale-105"
+                : "border-gray-200 hover:border-gray-300"
                 }`}
             >
               {planKey === "growth" && (
@@ -260,8 +260,8 @@ export default function PricingPage() {
               <button
                 onClick={handleSubscription}
                 className={`w-full py-4 px-6 rounded-lg cursor-pointer font-semibold transition-colors flex items-center justify-center ${planKey === "growth"
-                    ? "bg-blue-600 hover:bg-blue-700 text-white"
-                    : "bg-gray-900 hover:bg-gray-800 text-white"
+                  ? "bg-blue-600 hover:bg-blue-700 text-white"
+                  : "bg-gray-900 hover:bg-gray-800 text-white"
                   }`}
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
@@ -334,15 +334,18 @@ export default function PricingPage() {
             </div>
           </div>
 
-          <div className="mt-8 text-center">
-            <button
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors inline-flex items-center"
-              style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-            >
-              Start Project-Based Hire
-              <ArrowRight size={20} className="ml-2" />
-            </button>
-          </div>
+          {!authStatus && (
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => router.push("/client/signup")}
+                className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white px-8 py-4 rounded-lg font-semibold transition-colors inline-flex items-center"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                Start Project-Based Hire
+                <ArrowRight size={20} className="ml-2" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Multi-Talent Discount */}
@@ -430,7 +433,7 @@ export default function PricingPage() {
 
           <div className="mt-8">
             <button
-            onClick={handleContactUs}
+              onClick={handleContactUs}
               className="bg-white text-gray-900 px-8 py-4 cursor-pointer rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center"
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >

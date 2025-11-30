@@ -2,7 +2,7 @@ import { ArrowRight, Globe, Shield, Zap } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="pt-10 pb-16 md:pb-24 px-6 bg-white relative overflow-hidden">
+    <section className="pt-20 pb-16 md:pb-24 px-6 bg-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Gradient circles */}
