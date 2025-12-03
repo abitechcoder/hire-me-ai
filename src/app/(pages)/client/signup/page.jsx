@@ -79,12 +79,12 @@ export default function ClientSignupPage() {
         );
       }
 
-      const user = await appwriteService.createUser({email: formData.email, password: formData.password, name: formData.contactPerson});
+      const user = await appwriteService.createUser({ email: formData.email, password: formData.password, name: formData.contactPerson });
       if (user) {
         setSubmitted(true);
         setAuthStatus(true);
       }
-      
+
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("There was an error submitting your form. Please try again.");
@@ -96,7 +96,7 @@ export default function ClientSignupPage() {
   // Redirect authenticated clients to dashboard when authStatus changes
   useEffect(() => {
     if (authStatus) {
-        router.replace('/client/dashboard');
+      router.replace('/client/dashboard');
     }
   }, [authStatus, router]);
 
@@ -154,15 +154,15 @@ export default function ClientSignupPage() {
             </div>
           </div>
           <div className="mt-8">
-              <a
-                href="/dashboard"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                Go to Dashboard
-                <ArrowRight size={20} className="ml-2" />
-              </a>
-            </div>
+            <a
+              href="/dashboard"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
+              style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+            >
+              Go to Dashboard
+              <ArrowRight size={20} className="ml-2" />
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -315,6 +315,29 @@ export default function ClientSignupPage() {
               </div>
             </div>
 
+            {/* LinkedIn Link */}
+            <div>
+              <label
+                htmlFor="linkedInUrl"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <Link size={16} className="inline mr-2" />
+                LinkedIn Profile Link *
+              </label>
+              <input
+                type="text"
+                id="linkedInUrl"
+                name="linkedInUrl"
+                required
+                value={formData.linkedInUrl}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Share a link to your LinkedIn profile"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
+            </div>
+
             {/* Role Requirements */}
             <div>
               <label
@@ -363,29 +386,6 @@ export default function ClientSignupPage() {
                 onChange={handleBudgetChange} // Use the updated handler
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 placeholder="e.g., $2000, $5000"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              />
-            </div>
-
-            {/* LinkedIn Link */}
-            <div>
-              <label
-                htmlFor="linkedInUrl"
-                className="block text-sm font-semibold text-gray-900 mb-3"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                <Link size={16} className="inline mr-2" />
-                LinkedIn Profile Link *
-              </label>
-              <input
-                type="text"
-                id="linkedInUrl"
-                name="linkedInUrl"
-                required
-                value={formData.linkedInUrl}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="Share a link to your LinkedIn profile"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               />
             </div>

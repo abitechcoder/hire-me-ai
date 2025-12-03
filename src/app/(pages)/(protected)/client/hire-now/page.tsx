@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { ArrowLeft, Plus, X, CheckCircle } from "lucide-react";
+import Skills from "@/components/Skills"
+import SkillDialog from "@/components/SkillDialog";
 
 export default function HireNowPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     workType: "",
     jobTitle: "",
     jobDescription: "",
@@ -17,10 +19,11 @@ export default function HireNowPage() {
     professionalsNeeded: 1,
   });
 
-  const [newSkill, setNewSkill] = useState("");
+  const [newSkill, setNewSkill] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<any>({});
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog visibility
 
   const workTypeOptions = [
     "Full Time",
@@ -42,44 +45,73 @@ export default function HireNowPage() {
     "Lead/Principal",
   ];
 
-  const handleInputChange = (e) => {
+  const [expertise, setExpertise] = useState([
+    "Python",
+    "JavaScript",
+    "UI/UX",
+    "React",
+    "Node.js",
+    "Django",
+    "SQL",
+    "AWS",
+    "Figma",
+    "Project Management",
+    "Testing",
+  ]);
+
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [name]: value,
     }));
 
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: null,
       }));
     }
   };
 
-  const addSkill = (e) => {
-    e.preventDefault();
-    if (newSkill.trim() && !formData.skillsNeeded.includes(newSkill.trim())) {
-      setFormData((prev) => ({
-        ...prev,
-        skillsNeeded: [...prev.skillsNeeded, newSkill.trim()],
-      }));
+  const handleAddSkill = () => {
+    if (newSkill.trim() !== "") {
+      setExpertise([...expertise, newSkill.trim()]);
       setNewSkill("");
+      setIsDialogOpen(false); // Close the dialog after adding the skill
     }
   };
 
-  const removeSkill = (skillToRemove) => {
-    setFormData((prev) => ({
-      ...prev,
-      skillsNeeded: prev.skillsNeeded.filter(
-        (skill) => skill !== skillToRemove,
-      ),
-    }));
-  };
+  const handleSkillsUpdate = (skill: string) => {
+    const updatedSkills = formData.skillsNeeded.includes(skill)
+      ? formData.skillsNeeded.filter((s: string) => s !== skill)
+      : [...formData.skillsNeeded, skill];
+    setFormData({ ...formData, skillsNeeded: updatedSkills });
+  }
+
+  // const addSkill = (e: any) => {
+  //   e.preventDefault();
+  //   if (newSkill.trim() && !formData.skillsNeeded.includes(newSkill.trim())) {
+  //     setFormData((prev: any) => ({
+  //       ...prev,
+  //       skillsNeeded: [...prev.skillsNeeded, newSkill.trim()],
+  //     }));
+  //     setNewSkill("");
+  //   }
+  // };
+
+  // const removeSkill = (skillToRemove: any) => {
+  //   setFormData((prev: any) => ({
+  //     ...prev,
+  //     skillsNeeded: prev.skillsNeeded.filter(
+  //       (skill: string) => skill !== skillToRemove,
+  //     ),
+  //   }));
+  // };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: any = {};
 
     if (!formData.workType) newErrors.workType = "Work type is required";
     if (!formData.jobTitle) newErrors.jobTitle = "Job title is required";
@@ -102,7 +134,7 @@ export default function HireNowPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -144,8 +176,6 @@ export default function HireNowPage() {
   if (showSuccess) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navigation />
-
         <main className="max-w-4xl mx-auto px-6 py-8">
           <div className="text-center py-16">
             <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
@@ -165,7 +195,7 @@ export default function HireNowPage() {
             <div className="space-x-4">
               <a
                 href="/client/dashboard"
-                className="inline-flex px-6 py-3 bg-[#007bff] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                className="inline-flex px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
               >
                 Back to Dashboard
               </a>
@@ -223,11 +253,10 @@ export default function HireNowPage() {
                 name="workType"
                 value={formData.workType}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.workType
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.workType
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               >
                 <option value="">Select work type</option>
                 {workTypeOptions.map((option) => (
@@ -254,11 +283,10 @@ export default function HireNowPage() {
                 value={formData.jobTitle}
                 onChange={handleInputChange}
                 placeholder="e.g. Senior React Developer"
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.jobTitle
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.jobTitle
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               />
               {errors.jobTitle && (
                 <p className="mt-1 text-sm text-red-600">
@@ -278,11 +306,10 @@ export default function HireNowPage() {
                 onChange={handleInputChange}
                 rows={4}
                 placeholder="Describe the role, responsibilities, and what you're looking for..."
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.jobDescription
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.jobDescription
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               />
               {errors.jobDescription && (
                 <p className="mt-1 text-sm text-red-600">
@@ -294,7 +321,7 @@ export default function HireNowPage() {
             {/* Average Hours */}
             <div className="md:col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Average Hours Required *
+                Average Hours Required per day *
               </label>
               <input
                 type="number"
@@ -304,11 +331,10 @@ export default function HireNowPage() {
                 min="1"
                 max="80"
                 placeholder="e.g. 40"
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.averageHours
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.averageHours
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               />
               {errors.averageHours && (
                 <p className="mt-1 text-sm text-red-600">
@@ -326,11 +352,10 @@ export default function HireNowPage() {
                 name="paymentFrequency"
                 value={formData.paymentFrequency}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.paymentFrequency
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.paymentFrequency
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               >
                 <option value="">Select payment frequency</option>
                 {paymentFrequencyOptions.map((option) => (
@@ -357,11 +382,10 @@ export default function HireNowPage() {
                 value={formData.salaryBudget}
                 onChange={handleInputChange}
                 placeholder="e.g. $50,000 - $70,000"
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.salaryBudget
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.salaryBudget
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               />
               {errors.salaryBudget && (
                 <p className="mt-1 text-sm text-red-600">
@@ -379,11 +403,10 @@ export default function HireNowPage() {
                 name="experienceLevel"
                 value={formData.experienceLevel}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.experienceLevel
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.experienceLevel
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               >
                 <option value="">Select experience level</option>
                 {experienceLevelOptions.map((option) => (
@@ -401,6 +424,16 @@ export default function HireNowPage() {
 
             {/* Skills Needed */}
             <div className="md:col-span-2">
+              <Skills
+                title="Skills Needed"
+                skills={formData.skillsNeeded}
+                expertise={expertise}
+                skillsError={errors.skillsNeeded}
+                handleSkillsUpdate={handleSkillsUpdate}
+                setIsDialogOpen={setIsDialogOpen} />
+            </div>
+
+            {/* <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Skills Needed *
               </label>
@@ -408,7 +441,7 @@ export default function HireNowPage() {
                 {formData.skillsNeeded.map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#007bff] text-white"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary text-white"
                   >
                     {skill}
                     <button
@@ -428,12 +461,12 @@ export default function HireNowPage() {
                   onChange={(e) => setNewSkill(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && addSkill(e)}
                   placeholder="Add a skill (e.g. React, Python, etc.)"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors bg-white text-gray-900"
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-white text-gray-900"
                 />
                 <button
                   type="button"
                   onClick={addSkill}
-                  className="px-4 py-3 bg-[#007bff] text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center"
+                  className="px-4 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center"
                 >
                   <Plus size={20} />
                 </button>
@@ -443,7 +476,7 @@ export default function HireNowPage() {
                   {errors.skillsNeeded}
                 </p>
               )}
-            </div>
+            </div> */}
 
             {/* Requirements */}
             <div className="md:col-span-2">
@@ -456,11 +489,10 @@ export default function HireNowPage() {
                 onChange={handleInputChange}
                 rows={3}
                 placeholder="List specific requirements, qualifications, or must-haves..."
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors ${
-                  errors.requirements
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } bg-white text-gray-900`}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.requirements
+                  ? "border-red-500"
+                  : "border-gray-300"
+                  } bg-white text-gray-900`}
               />
               {errors.requirements && (
                 <p className="mt-1 text-sm text-red-600">
@@ -481,7 +513,7 @@ export default function HireNowPage() {
                 onChange={handleInputChange}
                 min="1"
                 max="20"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#007bff] focus:border-transparent transition-colors bg-white text-gray-900"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-white text-gray-900"
               />
             </div>
           </div>
@@ -497,11 +529,10 @@ export default function HireNowPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className={`px-8 py-3 bg-[#007bff] text-white font-medium rounded-lg transition-all duration-200 ${
-                isLoading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-blue-600 hover:shadow-lg"
-              }`}
+              className={`px-8 py-3 bg-primary text-white font-medium rounded-lg transition-all duration-200 ${isLoading
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-blue-600 hover:shadow-lg"
+                }`}
             >
               {isLoading ? (
                 <span className="flex items-center">
@@ -533,6 +564,10 @@ export default function HireNowPage() {
             </button>
           </div>
         </form>
+        {/* Add Skill Dialog */}
+        {isDialogOpen && (
+          <SkillDialog newSkill={newSkill} setNewSkill={setNewSkill} setIsDialogOpen={setIsDialogOpen} handleAddSkill={handleAddSkill} />
+        )}
       </main>
     </div>
   );

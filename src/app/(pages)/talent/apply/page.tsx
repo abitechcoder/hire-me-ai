@@ -13,9 +13,11 @@ import {
   MapPin,
   CircleDollarSign
 } from "lucide-react";
+import SkillDialog from "@/components/SkillDialog"
+import Skills from "@/components/Skills";
 
 export default function TalentApplicationPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     fullName: "",
     email: "",
     phone: "",
@@ -29,7 +31,7 @@ export default function TalentApplicationPage() {
     rates: "",
     location: "",
     // shortBio: "",
-    // videoSubmissionLink: ""
+    videoLink: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -68,26 +70,26 @@ export default function TalentApplicationPage() {
   const [newSkill, setNewSkill] = useState(""); // State for the new skill input
   const [skillsError, setSkillsError] = useState(false); // State for skills validation error
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleRatesChange = (e) => {
+  const handleRatesChange = (e: any) => {
     const value = e.target.value.replace(/[^0-9.]/g, ""); // Remove non-numeric characters
     setFormData({ ...formData, rates: value }); // Store the raw numeric value
   };
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      resume: e.target.files[0],
-    });
-  };
+  // const handleFileChange = (e: any) => {
+  //   setFormData({
+  //     ...formData,
+  //     resume: e.target.files[0],
+  //   });
+  // };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // Validate skills
@@ -133,6 +135,14 @@ export default function TalentApplicationPage() {
       setIsDialogOpen(false); // Close the dialog after adding the skill
     }
   };
+
+  const handleSkillsUpdate = (skill: string) => {
+    const updatedSkills = formData.skills.includes(skill)
+      ? formData.skills.filter((s: string) => s !== skill)
+      : [...formData.skills, skill];
+    setFormData({ ...formData, skills: updatedSkills });
+  }
+
 
   if (submitted) {
     return (
@@ -420,50 +430,13 @@ export default function TalentApplicationPage() {
             </div>
 
             {/* Skills */}
-            <div>
-              <label
-                htmlFor="skills"
-                className="block text-sm font-semibold text-gray-900 mb-3"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                Your Skills & Expertise *
-              </label>
-              <div className={`w-full px-4 py-3 border ${skillsError ? "border-red-500" : "border-gray-300"
-                } rounded-lg`}>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {expertise.map((skill) => (
-                    <span
-                      key={skill}
-                      className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${formData.skills.includes(skill)
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-200 text-gray-700"
-                        }`}
-                      onClick={() => {
-                        const updatedSkills = formData.skills.includes(skill)
-                          ? formData.skills.filter((s) => s !== skill)
-                          : [...formData.skills, skill];
-                        setFormData({ ...formData, skills: updatedSkills });
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                  <button
-                    type="button"
-                    className="p-2 bg-gray-200 rounded-full cursor-pointer"
-                    onClick={() => setIsDialogOpen(true)} // Open the dialog
-                  >
-                    <Plus size={16} className="text-gray-500" />
-                  </button>
-                </div>
-              </div>
-              {skillsError ? (
-                <p className="text-sm text-red-500 mt-2">
-                  Please select one or more skills.
-                </p>
-              ) : (<p className="text-sm pt-2 text-gray-500">Select one or more skills or add a new skill by clicking the plus button</p>)}
-
-            </div>
+            <Skills
+              title="Skills Needed"
+              skills={formData.skills}
+              expertise={expertise}
+              skillsError={skillsError}
+              handleSkillsUpdate={handleSkillsUpdate}
+              setIsDialogOpen={setIsDialogOpen} />
 
             {/* Rates */}
             <div>
@@ -542,6 +515,29 @@ export default function TalentApplicationPage() {
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 placeholder="Share a link to your LinkedIn profile"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
+            </div>
+
+            {/* Intro Video Link */}
+            <div>
+              <label
+                htmlFor="videoLink"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <Link size={16} className="inline mr-2" />
+                Introduction Video Link *
+              </label>
+              <input
+                type="text"
+                id="videoLink"
+                name="videoLink"
+                value={formData.videoLink}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Share a link to your introductio video"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               />
             </div>
@@ -713,66 +709,7 @@ export default function TalentApplicationPage() {
 
         {/* Add Skill Dialog */}
         {isDialogOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-              {/* Dialog Header */}
-              <div className="flex items-center justify-between mb-4">
-                <h2
-                  className="text-xl font-bold text-gray-900"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  Add Skill
-                </h2>
-                <button
-                  type="button"
-                  className="p-2 rounded-full hover:bg-gray-100"
-                  onClick={() => setIsDialogOpen(false)} // Close the dialog
-                >
-                  <X size={20} className="text-gray-500" />
-                </button>
-              </div>
-
-              {/* Dialog Content */}
-              <div>
-                <label
-                  htmlFor="newSkill"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  Skill Name
-                </label>
-                <input
-                  type="text"
-                  id="newSkill"
-                  value={newSkill}
-                  onChange={(e) => setNewSkill(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter a skill (e.g., TypeScript)"
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                />
-              </div>
-
-              {/* Dialog Actions */}
-              <div className="mt-6 flex justify-end">
-                <button
-                  type="button"
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 cursor-pointer"
-                  onClick={() => setIsDialogOpen(false)} // Close the dialog
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer"
-                  onClick={handleAddSkill} // Add the new skill
-                  style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-                >
-                  Add Skill
-                </button>
-              </div>
-            </div>
-          </div>
+          <SkillDialog newSkill={newSkill} setNewSkill={setNewSkill} setIsDialogOpen={setIsDialogOpen} handleAddSkill={handleAddSkill} />
         )}
       </div>
     </div>

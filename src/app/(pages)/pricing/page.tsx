@@ -28,8 +28,8 @@ export default function PricingPage() {
       target: "Startups, solo entrepreneurs, first-time outsourcers",
       pricing: {
         monthly: { price: 50, discount: 0, total: 50 },
-        quarterly: { price: 48, discount: 5, total: 144 },
-        annual: { price: 44, discount: 12, total: 528 },
+        quarterly: { price: 144, discount: 5, total: 48 },
+        annual: { price: 528, discount: 12, total: 44 },
       },
       features: [
         "Up to 5 Job Postings & 9 Contact Unlocks",
@@ -45,8 +45,8 @@ export default function PricingPage() {
       target: "Growing companies, agencies, 10-50 employees",
       pricing: {
         monthly: { price: 80, discount: 0, total: 80 },
-        quarterly: { price: 76, discount: 5, total: 228 },
-        annual: { price: 70, discount: 12, total: 840 },
+        quarterly: { price: 228, discount: 5, total: 76 },
+        annual: { price: 840, discount: 12, total: 70 },
       },
       features: [
         "Up to 12 Job Postings & 30 Contact Unlocks",
@@ -231,8 +231,8 @@ export default function PricingPage() {
                       className="text-sm text-green-600 mt-2"
                       style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                     >
-                      Save {plan.pricing[billingCycle].discount}% • Total:{" "}
-                      {formatPrice(plan.pricing[billingCycle].total)}
+                      Save {plan.pricing[billingCycle].discount}% • {" "}
+                      {formatPrice(plan.pricing[billingCycle].total)} monthly
                     </p>
                   )}
                 </div>
@@ -432,14 +432,15 @@ export default function PricingPage() {
           </div>
 
           <div className="mt-8">
-            <button
-              onClick={handleContactUs}
+            <a
+              href="https://calendly.com/info-bmeson/30min"
+              target="_blank"
               className="bg-white text-gray-900 px-8 py-4 cursor-pointer rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center"
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               Build Your Team
               <ArrowRight size={20} className="ml-2" />
-            </button>
+            </a>
           </div>
         </div>
 
@@ -458,14 +459,15 @@ export default function PricingPage() {
             Contact our team to discuss enterprise pricing and custom
             arrangements.
           </p>
-          <button
-            onClick={handleContactUs}
+          <a
+            href="https://calendly.com/info-bmeson/30min"
+            target="_blank"
             className="bg-gray-900 hover:bg-gray-800 cursor-pointer text-white px-8 py-4 rounded-lg font-semibold transition-colors inline-flex items-center"
             style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
             Contact Us
             <ArrowRight size={20} className="ml-2" />
-          </button>
+          </a>
         </div>
       </div>
     </div>

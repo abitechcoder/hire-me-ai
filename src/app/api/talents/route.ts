@@ -42,6 +42,7 @@ export async function POST(request: Request) {
             Role: body.role,
             Skills: body.skills,
             "Portfolio Link": body.portfolioLink,
+            "Video URL": body.videoLink,
             "Github URL": body.githubLink,
             "LinkedIn Profile URL": body.linkedInURL,
             Experience: body.experienceLevel,
