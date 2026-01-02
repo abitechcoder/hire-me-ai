@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
     ArrowLeft,
     Star,
@@ -104,6 +104,10 @@ const TalentProfile = ({ talent }: any) => {
         responseTime: "< 2 hours",
     };
 
+    if(!talent) {
+        return <div>No talent data available.</div>;
+    }
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Sidebar */}
@@ -118,27 +122,27 @@ const TalentProfile = ({ talent }: any) => {
                                 className="w-24 h-24 rounded-full object-cover mx-auto"
                             /> */}
                             <div className="w-24 h-24 rounded-full mx-auto bg-blue-50 border-primary flex items-center justify-center text-primary text-4xl font-bold">
-                                {talent?.fields?.Name.split(' ').map((n: string) => n[0]).join('')}
+                                {talent?.Name.split(' ').map((n: string) => n[0]).join('')}
                             </div>
                             <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                                 <Shield size={16} className="text-white" />
                             </div>
                         </div>
                         <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                            {talent?.fields?.Name}
+                            {talent?.Name}
                         </h2>
                         <p className="text-gray-600">
-                            {talent?.fields?.Role}
+                            {talent?.Role}
                         </p>
                         <p className="text-gray-600 text-sm mb-4">
-                            {talent.fields?.Experience}
+                            {talent?.Experience}
                         </p>
 
                         {/* Match Score */}
                         <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
                             <div className="text-center">
                                 <span className="text-2xl font-bold text-green-600">
-                                    {Number(talent.fields["Trust Score"])}%
+                                    {Number(talent["Trust Score"])}%
                                 </span>
                                 <p className="text-sm text-green-600 font-medium">
                                     Match Score
@@ -155,7 +159,7 @@ const TalentProfile = ({ talent }: any) => {
                                         className="text-yellow-400 fill-current"
                                     />
                                     <span className="font-medium text-gray-900">
-                                        {Number(talent.fields["Trust Score"]) / 20}
+                                        {Number(talent["Trust Score"]) / 20}
                                     </span>
                                 </div>
                                 {/* <p className="text-xs text-gray-500">
@@ -164,7 +168,7 @@ const TalentProfile = ({ talent }: any) => {
                             </div>
                             <div className="text-center">
                                 <p className="font-medium text-gray-900 mb-1">
-                                    {talent.fields["Total Placements"]}
+                                    {talent["Total Placements"]}
                                 </p>
                                 <p className="text-xs text-gray-500">
                                     Successful Placements
@@ -177,14 +181,14 @@ const TalentProfile = ({ talent }: any) => {
                     <div className="space-y-3">
                         <div className="flex items-center text-sm text-gray-600">
                             <MapPin size={16} className="mr-3" />
-                            {talent.fields.Location}
+                            {talent?.Location}
                         </div>
                         {/* <div>
                             <h4 className="font-medium text-gray-900 mb-2">
                                 Experience Level
                             </h4>
                             <p className="text-gray-600 text-sm">
-                                {talent.fields?.Experience}
+                                {talent?.Experience}
                             </p>
                         </div> */}
                         {/* <div className="flex items-center text-sm text-gray-600">
@@ -201,7 +205,7 @@ const TalentProfile = ({ talent }: any) => {
                     <div className="mt-6 pt-6 border-t border-gray-200">
                         <div className="text-center">
                             <p className="text-2xl font-bold text-gray-900">
-                                ${talent.fields.Rates}/hr
+                                ${talent?.Rates}/hr
                             </p>
                             <p className="text-sm text-gray-500">
                                 Hourly Rate
@@ -267,7 +271,7 @@ const TalentProfile = ({ talent }: any) => {
                         Skills
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                        {talent?.fields?.Skills.map((skill: string, index: number) => (
+                        {talent?.Skills.map((skill: string, index: number) => (
                             <span
                                 key={index}
                                 className="px-3 py-1 bg-blue-50 text-primary text-sm rounded-lg"
@@ -288,42 +292,42 @@ const TalentProfile = ({ talent }: any) => {
                             <Mail size={16} className="mr-3 text-gray-400" />
                             {isContactUnlocked ? (
                                 <a
-                                    href={`mailto:${talent?.fields?.Email}`}
+                                    href={`mailto:${talent?.Email}`}
                                     className="text-primary hover:underline"
                                 >
-                                    {talent?.fields?.Email}
+                                    {talent?.Email}
                                 </a>
                             ) : (
                                 <BlurredText
-                                    text="adebayo.johnson@email.com"
+                                    text={talent?.Email}
                                     className="text-gray-600"
                                 />
                             )}
                         </div>
-                        {talent?.fields["Phone Number"] && (
+                        {talent["Phone Number"] && (
                             <div className="flex items-center text-sm">
                                 <Phone size={16} className="mr-3 text-gray-400" />
                                 {isContactUnlocked ? (
                                     <a
-                                        href={`tel:${talent.fields["Phone Number"]}`}
+                                        href={`tel:${talent["Phone Number"]}`}
                                         className="text-primary hover:underline"
                                     >
-                                        {talent.fields["Phone Number"]}
+                                        {talent["Phone Number"]}
                                     </a>
                                 ) : (
                                     <BlurredText
-                                        text="+234 801 234 5678"
+                                        text={talent["Phone Number"]}
                                         className="text-gray-600"
                                     />
                                 )}
                             </div>
                         )}
-                        {talent?.fields["LinkedIn Profile URL"] && (
+                        {talent["LinkedIn Profile URL"] && (
                             <div className="flex items-center text-sm">
                                 <Linkedin size={16} className="mr-3 text-gray-400" />
                                 {isContactUnlocked ? (
                                     <a
-                                        href={talent.fields["LinkedIn Profile URL"]}
+                                        href={talent["LinkedIn Profile URL"]}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-primary hover:underline flex items-center"
@@ -340,12 +344,12 @@ const TalentProfile = ({ talent }: any) => {
                             </div>
                         )}
 
-                        {talent?.fields["Portfolio Link"] && (
+                        {talent["Portfolio Link"] && (
                             <div className="flex items-center text-sm">
                                 <Link size={16} className="mr-3 text-gray-400" />
                                 {isContactUnlocked ? (
                                     <a
-                                        href={talent?.fields["Portfolio Link"]}
+                                        href={talent["Portfolio Link"]}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-primary hover:underline flex items-center"
@@ -362,12 +366,12 @@ const TalentProfile = ({ talent }: any) => {
                             </div>
                         )}
 
-                        {talent?.fields["Github URL"] && (
+                        {talent["Github URL"] && (
                             <div className="flex items-center text-sm">
                                 <Github size={16} className="mr-3 text-gray-400" />
                                 {isContactUnlocked ? (
                                     <a
-                                        href={talent?.fields["Github URL"]}
+                                        href={talent["Github URL"]}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-primary hover:underline flex items-center"
@@ -396,18 +400,18 @@ const TalentProfile = ({ talent }: any) => {
                         About Me
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                        {talent?.fields["Profile Summary (AI)"].value}
+                        {/* {talent["Profile Summary (AI)"]} */}
                     </p>
                 </div>
 
                 {/* Video Introduction */}
-                {talent.fields["Video URL"] && (
+                {talent["Video URL"] && (
                     <div className="bg-white rounded-xl border border-gray-200 p-6">
                         <h3 className="text-xl font-semibold text-gray-900 mb-4">
                             Video Introduction
                         </h3>
                         <div className="relative bg-gray-100 rounded-lg h-48 flex items-center justify-center">
-                            <a href={talent.fields["Video URL"]} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
+                            <a href={talent["Video URL"]} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
                                 <Play size={24} />
                                 <span>Play Video Introduction</span>
                             </a>

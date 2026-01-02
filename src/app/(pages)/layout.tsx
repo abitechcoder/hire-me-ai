@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import ClientHeader from "@/components/ClientHeader";
 import Footer from "@/components/Footer";
 import appwriteService from '@/appwrite/config';
+import Loading from '@/components/ui/Loading';
 
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
@@ -22,7 +23,9 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthProvider value={{ authStatus, setAuthStatus }}>
       {
-        !loading && (
+        loading ? (
+          <Loading text="Initializing..." className="min-h-screen" />
+        ) : (
           <div>
             {!authStatus ? (
               <>

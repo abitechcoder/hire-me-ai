@@ -12,14 +12,16 @@ import {
 } from "lucide-react";
 import appwriteService from "@/appwrite/config";
 import useAuth from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function Navigation() {
   const router = useRouter();
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const {setAuthStatus} = useAuth();
+  const { setAuthStatus } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -40,14 +42,10 @@ export default function Navigation() {
   ];
 
   const isActiveRoute = (href) => {
-    if (typeof window !== "undefined") {
-      const currentPath = window.location.pathname;
-      if (href === "/client") {
-        return currentPath === "/client";
-      }
-      return currentPath.startsWith(href);
+    if (href === "/client") {
+      return pathname === "/client";
     }
-    return false;
+    return pathname?.startsWith(href);
   };
 
   const handleLogout = async () => {
@@ -76,19 +74,19 @@ export default function Navigation() {
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center space-x-1">
                 {navigationItems.map((item) => (
-                  <a
+                  <Link
                     key={item.key}
                     href={item.href}
                     className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActiveRoute(item.href)
-                        ? "text-primary bg-blue-50"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      ? "text-primary bg-blue-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                   >
                     {item.name}
                     {isActiveRoute(item.href) && (
                       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"></div>
                     )}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -115,21 +113,21 @@ export default function Navigation() {
                 {/* Profile Dropdown Menu */}
                 {isProfileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
-                    <a
-                    href="/client/settings"
-                    className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                  >
-                    <Settings size={16} />
-                    <span>Account Settings</span>
-                  </a>
-                  <a
-                    href="/client/help"
-                    className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                  >
-                    <HelpCircle size={16} />
-                    <span>Help & Support</span>
-                  </a>
-                  <hr className="my-2 border-gray-200" />
+                    <Link
+                      href="/client/settings"
+                      className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <Settings size={16} />
+                      <span>Account Settings</span>
+                    </Link>
+                    <Link
+                      href="/client/help"
+                      className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <HelpCircle size={16} />
+                      <span>Help & Support</span>
+                    </Link>
+                    <hr className="my-2 border-gray-200" />
                     <button
                       onClick={handleLogout}
                       className="flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-100 w-full text-left cursor-pointer"
@@ -160,37 +158,37 @@ export default function Navigation() {
             <div className="md:hidden mt-4 pt-4 border-t border-gray-200">
               <div className="space-y-2">
                 {navigationItems.map((item) => (
-                  <a
+                  <Link
                     key={item.key}
                     href={item.href}
                     className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActiveRoute(item.href)
-                        ? "text-primary bg-blue-50"
-                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      ? "text-primary bg-blue-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
 
                 {/* Mobile Profile Options */}
                 <hr className="my-4 border-gray-200" />
-              <a
-                href="/client/settings"
-                className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Settings size={16} />
-                <span>Account Settings</span>
-              </a>
-              <a
-                href="/client/help"
-                className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <HelpCircle size={16} />
-                <span>Help & Support</span>
-              </a>
+                <Link
+                  href="/client/settings"
+                  className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Settings size={16} />
+                  <span>Account Settings</span>
+                </Link>
+                <Link
+                  href="/client/help"
+                  className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <HelpCircle size={16} />
+                  <span>Help & Support</span>
+                </Link>
                 <button
                   onClick={() => {
                     handleLogout();

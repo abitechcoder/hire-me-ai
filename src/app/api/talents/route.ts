@@ -13,16 +13,13 @@ export async function GET(request: Request) {
             })
             .all();
 
-        const data = records.map((record) => ({
-            id: record.id,
-            fields: record.fields,
-        }));
+        const data = records.map((record) => (record.fields));
 
-        return NextResponse.json({ data, success: true });
+        return NextResponse.json(data);
     } catch (error) {
         console.error('Airtable API Error:', error);
         return NextResponse.json(
-            { error: 'Failed to fetch data from Airtable', success: false },
+            { error: 'Failed to fetch talents' },
             { status: 500 }
         );
     }
@@ -52,15 +49,15 @@ export async function POST(request: Request) {
         };
 
         // Create a new record in Airtable
-        const record = await BASE(tableName).create([{ fields: data }], { typecast: true });
+        const newUser = await BASE(tableName).create([{ fields: data }], { typecast: true });
 
         // Return the created record
-        return NextResponse.json({ data: record, success: true });
+        return NextResponse.json(newUser, { status: 201 });
     } catch (error) {
-        console.error('Airtable API Error:', error);
+        // console.error('Airtable API Error:', error);
         return NextResponse.json(
-            { error: 'Failed to create record in Airtable', success: false },
-            { status: 500 }
+            { error: 'Failed to create user'},
+            { status: 400 }
         );
     }
 }

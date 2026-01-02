@@ -4,75 +4,24 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import TalentProfile from '@/components/TalentProfile';
+import { useTalent } from '@/hooks/queries/useTalents';
+import Loading from '@/components/ui/Loading';
 
 export default function ProfileView() {
   const params = useParams();
+  const talentId = String(params.id)
   const router = useRouter()
-  const { id } = params;
-  const [activeTab, setActiveTab] = useState('about');
+  const { data: talent, isLoading, error } = useTalent(talentId);
 
-  const [talent, setTalent] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  console.log("Talent data:", talent);
 
-  useEffect(() => {
-    const fetchTalent = async () => {
-      try {
-        const response = await fetch(`/api/talents/${id}`);
-        const result = await response.json();
+  if (isLoading) {
+    return <Loading text="Loading talent profile..." />;
+  }
 
-        if (result.success) {
-          // console.log(result.data);
-          setTalent(result.data);
-        } else {
-          setTalent(null);
-          setError("Failed to load talent. Please try again later.");
-        }
-      } catch (err) {
-        setTalent(null);
-        setError("Failed to load talent. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTalent();
-  }, []);
-
-  const projects = [
-    { id: 1, name: "E-commerce Redesign", category: "Web Design", status: "Completed" },
-    { id: 2, name: "Mobile Banking App", category: "Mobile", status: "In Progress" },
-    { id: 3, name: "Dashboard Analytics", category: "Web Design", status: "Completed" }
-  ];
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6 pt-20 pb-16">
-          <div className="animate-pulse">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 space-y-6">
-                <div className="bg-white rounded-xl p-6">
-                  <div className="w-24 h-24 rounded-full mx-auto bg-gray-300"></div>
-                  <div className="mt-4 h-6 bg-gray-300 rounded w-3/4 mx-auto"></div>
-                  <div className="mt-2 h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
-                  <div className='mt-4 gap-4 flex'>
-                    <div className='h-20 flex-1 bg-gray-300 rounded-lg'></div>
-                    <div className='h-20 flex-1 bg-gray-300 rounded-lg'></div>
-                  </div>
-                  <div className='h-20 mt-8 bg-gray-300 rounded-lg w-full'></div>
-                  <div className='h-24 mt-8 bg-gray-300 rounded-lg w-full'></div>
-                </div>
-              </div>
-              <div className="lg:col-span-2 space-y-8">
-                <div className='h-40 bg-gray-300 rounded-lg w-full'></div>
-                <div className='h-80 bg-gray-300 rounded-lg w-full'></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  if (error) {
+    console.error(error);
+    return <div>Error: failed to fetch talent</div>;
   }
 
   return (

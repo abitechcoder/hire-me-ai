@@ -7,8 +7,9 @@ import {
     MessageCircle,
 } from "lucide-react";
 import useAuth from '@/hooks/useAuth';
+import { Talent } from '@/hooks/queries/useTalents';
 
-const TalentCard = ({ person }: any) => {
+const TalentCard = ({ person }: {person: Talent}) => {
     const { authStatus } = useAuth();
     const [unlockedProfiles, setUnlockedProfiles] = useState(new Set());
 
@@ -33,22 +34,22 @@ const TalentCard = ({ person }: any) => {
             <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
                     {/* <img
-                        src={person.fields["Profile Photo"][0].url}
+                        src={person["Profile Photo"][0].url}
                         alt={`${person.name} profile photo`}
                         className="w-16 h-16 rounded-full object-cover object-center mr-4"
                     /> */}
                     <div className="relative w-12 h-12 rounded-full mr-4 border-primary bg-blue-50 border-2 flex items-center justify-center text-primary text-lg font-bold">
-                        {person?.fields?.Name.split(' ').map((n: string) => n[0]).join('')}
+                        {person?.Name.split(' ').map((n: string) => n[0]).join('')}
                         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                             <Shield size={12} className="text-white" />
                         </div>
                     </div>
                     <div className="flex-1 min-w-0">
                         <h3 className="text-lg font-semibold text-gray-900 truncate">
-                            {person.fields.Name}
+                            {person.Name}
                         </h3>
                         <p className="text-gray-600 text-sm">
-                            {person.fields.Role}
+                            {person.Role}
                         </p>
                     </div>
                 </div>
@@ -58,13 +59,13 @@ const TalentCard = ({ person }: any) => {
             <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
                 <div className="flex items-center text-sm text-gray-600">
                     <MapPin size={14} className="mr-2" />
-                    {person.fields.Location}
+                    {person.Location}
                 </div>
                 {/* <div
                     className={`flex items-center ${person.availability === "Available" ? "text-green-600" : "text-orange-600"}`}
                 >
                     <Clock size={14} className="mr-1" />
-                    {person.fields.Availability}
+                    {person.Availability}
                 </div> */}
             </div>
 
@@ -73,13 +74,13 @@ const TalentCard = ({ person }: any) => {
                 className="text-gray-600 text-sm mb-4 leading-relaxed"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
-                {person.fields["Profile Summary (AI)"].value}
+                {person["Profile Summary (AI)"].value}
             </p> */}
 
             {/* Skills */}
             <div className="mb-4">
                 <div className="flex flex-wrap gap-2">
-                    {person.fields.Skills.slice(0, 3).map((skill: string, index: number) => (
+                    {person.Skills.slice(0, 3).map((skill: string, index: number) => (
                         <span
                             key={index}
                             className="px-2 py-1 bg-blue-50 text-primary text-xs rounded-lg"
@@ -87,9 +88,9 @@ const TalentCard = ({ person }: any) => {
                             {skill}
                         </span>
                     ))}
-                    {person.fields.Skills.length > 3 && (
+                    {person.Skills.length > 3 && (
                         <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-lg">
-                            +{person.fields.skills.length - 3} more
+                            +{person.Skills.length - 3} more
                         </span>
                     )}
                 </div>
@@ -101,7 +102,7 @@ const TalentCard = ({ person }: any) => {
                     <div className="flex items-center justify-center space-x-1 mb-1">
                         <Star size={14} className="text-yellow-400 fill-current" />
                         <span className="text-sm font-medium text-gray-900">
-                            {Number(person.fields["Trust Score"]) / 20}
+                            {Number(person["Trust Score"]) / 20}
                         </span>
                     </div>
                     <p className="text-xs text-gray-500">
@@ -110,7 +111,7 @@ const TalentCard = ({ person }: any) => {
                 </div>
                 <div className="text-center">
                     <p className="text-sm font-medium text-gray-900 mb-1">
-                        {person.fields["Total Placements"]}
+                        {person["Total Placements"]}
                     </p>
                     <p className="text-xs text-gray-500">
                         Placements
@@ -118,7 +119,7 @@ const TalentCard = ({ person }: any) => {
                 </div>
                 <div className="text-center">
                     <p className="text-sm font-medium text-gray-900 mb-1">
-                        ${person.fields.Rates}/hr
+                        ${person.Rates}/hr
                     </p>
                     <p className="text-xs text-gray-500">
                         Hourly Rate

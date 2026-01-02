@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import TalentCard from "@/components/TalentCard";
+import { useTalents } from "@/hooks/queries/useTalents";
+import Loading from "@/components/ui/Loading";
 
 export default function BrowseTalentPage() {
+  const { data: talents, isLoading, error } = useTalents();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedExperience, setSelectedExperience] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [talent, setTalent] = useState<any>([]);
-  const [filteredTalent, setFilteredTalent] = useState<any>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  const [filteredTalents, setFilteredTalents] = useState<any>([]);
 
   const skillCategories = [
     "Development",
@@ -40,34 +40,7 @@ export default function BrowseTalentPage() {
   ];
 
   useEffect(() => {
-    const fetchTalents = async () => {
-      try {
-        // setLoading(true);
-        // setError(null);
-
-        const response = await fetch("/api/talents");
-        const result = await response.json();
-        console.log("Fetched talent data:", result);
-
-        if (result.success) {
-          setTalent(result.data);
-          setFilteredTalent(result.data);
-        } else {
-          setError(result.error);
-        }
-      } catch (err) {
-        console.error("Error fetching talent:", err);
-        setError("Failed to load talent. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTalents();
-  }, []);
-
-  useEffect(() => {
-    let filtered = talent;
+    let filtered = talents || [];
 
     if (searchTerm) {
       filtered = filtered.filter(
@@ -98,31 +71,20 @@ export default function BrowseTalentPage() {
       );
     }
 
-    setFilteredTalent(filtered);
+    setFilteredTalents(filtered);
   }, [
     searchTerm,
     selectedCategory,
     selectedExperience,
     selectedLocation,
-    talent,
+    talents,
   ]);
 
-  if (loading) {
-    return (
-      <div className="pt-20 pb-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mb-8"></div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-gray-200 h-80 rounded-2xl"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  if (isLoading) {
+    return <Loading text="Loading talent..." />;
   }
+
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -171,10 +133,10 @@ export default function BrowseTalentPage() {
               >
                 <option value="">All Categories</option>
                 {skillCategories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -218,19 +180,19 @@ export default function BrowseTalentPage() {
             className="text-gray-600"
             style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
-            Showing {filteredTalent.length} verified professionals
+            Showing {filteredTalents.length} verified professionals
           </p>
         </div>
 
         {/* Talent Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTalent.map((person: any) => (
+          {filteredTalents.map((person: any) => (
             <TalentCard key={person.id} person={person} />
           ))}
         </div>
 
         {/* No Results */}
-        {filteredTalent.length === 0 && (
+        {filteredTalents.length === 0 && (
           <div className="text-center py-16">
             <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Search size={32} className="text-gray-400" />
