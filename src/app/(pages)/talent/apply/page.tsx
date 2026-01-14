@@ -11,30 +11,40 @@ import {
   Plus,
   X,
   MapPin,
-  CircleDollarSign
+  CircleDollarSign,
+  Lock,
+  FileText,
+  Camera,
+  AlertCircle
 } from "lucide-react";
 import SkillDialog from "@/components/SkillDialog"
 import Skills from "@/components/Skills";
+import appwriteService from "@/appwrite/config";
 
 export default function TalentApplicationPage() {
   const [formData, setFormData] = useState<any>({
     fullName: "",
     email: "",
     phone: "",
+    role: "",
     skills: [],
-    experienceLevel: "",
     portfolioLink: "",
+    videoLink: "",
     githubLink: "",
     linkedInURL: "",
+    experienceLevel: "",
     category: "",
-    role: "",
-    rates: "",
     location: "",
-    // shortBio: "",
-    videoLink: ""
+    rates: "",
+    profilePhoto: "",
+    bio: "",
+    password: "",
+    resumeUrl: "",
+
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const [expertise, setExpertise] = useState([
     "Python",
@@ -69,6 +79,8 @@ export default function TalentApplicationPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog visibility
   const [newSkill, setNewSkill] = useState(""); // State for the new skill input
   const [skillsError, setSkillsError] = useState(false); // State for skills validation error
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null); // State for profile photo preview
+  const [resumeFile, setResumeFile] = useState<File | null>(null); // State for resume file
 
   const handleInputChange = (e: any) => {
     setFormData({
@@ -82,12 +94,24 @@ export default function TalentApplicationPage() {
     setFormData({ ...formData, rates: value }); // Store the raw numeric value
   };
 
-  // const handleFileChange = (e: any) => {
-  //   setFormData({
-  //     ...formData,
-  //     resume: e.target.files[0],
-  //   });
-  // };
+  const handleProfilePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData({ ...formData, profilePhoto: file });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setResumeFile(file);
+    }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -102,6 +126,33 @@ export default function TalentApplicationPage() {
 
     try {
       setIsSubmitting(true);
+      setFormError(null); // Clear any previous errors
+
+      // Create Appwrite user account for the talent
+      const userAccount = await appwriteService.createUser({
+        email: formData.email,
+        password: formData.password,
+        name: formData.fullName
+      });
+
+      // Prepare updated form data with file URLs and user ID
+      let updatedFormData = { ...formData, userId: userAccount.$id };
+
+      // Upload profile photo to Appwrite if exists
+      if (formData.profilePhoto instanceof File) {
+        const photoUploadResponse = await appwriteService.uploadFile(formData.profilePhoto);
+        console.log("Photo Upload Response:", photoUploadResponse);
+        const photoUrl = appwriteService.getFileUrl(photoUploadResponse.$id);
+        updatedFormData.profilePhoto = photoUrl;
+      }
+
+      // Upload resume to Appwrite if exists
+      if (resumeFile) {
+        const resumeUploadResponse = await appwriteService.uploadFile(resumeFile);
+        console.log("Resume Upload Response:", resumeUploadResponse);
+        const resumeUrl = appwriteService.getFileUrl(resumeUploadResponse.$id);
+        updatedFormData.resumeUrl = resumeUrl;
+      }
 
       // Send POST request to /api/talents
       const response = await fetch("/api/talents", {
@@ -109,7 +160,7 @@ export default function TalentApplicationPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Send formData as JSON
+        body: JSON.stringify(updatedFormData), // Send updated formData as JSON
       });
 
       if (!response.ok) {
@@ -120,9 +171,14 @@ export default function TalentApplicationPage() {
       console.log("Form submission successful:", result);
 
       setSubmitted(true); // Mark the form as submitted
-    } catch (error) {
+    } catch (error: any) {
+      if (error.type === "user_already_exists") {
+        console.error("email already exists");
+        setFormError("An account with this email already exists. Please use a different email or login to your existing account.");
+        return;
+      }
       console.error("Error submitting form:", error);
-      alert("There was an error submitting your application. Please try again.");
+      setFormError("There was an error submitting your application. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -175,7 +231,7 @@ export default function TalentApplicationPage() {
               Thank you for applying to join our talent network. Your
               application is now under review.
             </p>
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
               <h3
                 className="font-semibold text-blue-900 mb-4"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
@@ -209,17 +265,17 @@ export default function TalentApplicationPage() {
                   </p>
                 </div>
               </div>
-            </div>
-            {/* <div className="mt-8">
+            </div> */}
+            <div className="mt-8">
               <a
-                href="/talent/assessment"
+                href="/login"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
-                Take Assessment Now
+                Login to complete your profile
                 <ArrowRight size={20} className="ml-2" />
               </a>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
@@ -249,6 +305,50 @@ export default function TalentApplicationPage() {
         {/* Form */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Profile Photo Upload */}
+            <div className="flex flex-col items-center">
+              <label
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <Camera size={16} className="inline mr-2" />
+                Profile Photo *
+              </label>
+              <div className="relative">
+                <div
+                  className="w-32 h-32 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer"
+                  onClick={() => document.getElementById('profilePhoto')?.click()}
+                >
+                  {photoPreview ? (
+                    <img
+                      src={photoPreview}
+                      alt="Profile preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <Camera size={32} className="mx-auto text-gray-400 mb-1" />
+                      <span className="text-xs text-gray-500">Upload Photo</span>
+                    </div>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  id="profilePhoto"
+                  name="profilePhoto"
+                  accept="image/*"
+                  onChange={handleProfilePhotoChange}
+                  className="hidden"
+                />
+              </div>
+              <p
+                className="text-sm text-gray-500 mt-2"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                Click to upload a professional photo
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-6">
               {/* Full Name */}
               <div>
@@ -295,6 +395,51 @@ export default function TalentApplicationPage() {
                   style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                 />
               </div>
+            </div>
+
+            {/* Password */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                <Lock size={16} className="inline mr-2" />
+                Password *
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                value={formData.password}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Create a secure password"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
+            </div>
+
+            {/* Short Bio */}
+            <div>
+              <label
+                htmlFor="bio"
+                className="block text-sm font-semibold text-gray-900 mb-3"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                Professional Bio *
+              </label>
+              <textarea
+                id="bio"
+                name="bio"
+                required
+                rows={4}
+                value={formData.bio}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                placeholder="Tell us about yourself, your professional background, and what makes you a great hire..."
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -469,7 +614,7 @@ export default function TalentApplicationPage() {
             </div>
 
             {/* Resume Upload */}
-            {/* <div>
+            <div>
               <label
                 htmlFor="resume"
                 className="block text-sm font-semibold text-gray-900 mb-3"
@@ -483,9 +628,9 @@ export default function TalentApplicationPage() {
                 id="resume"
                 name="resume"
                 required
-                onChange={handleFileChange}
+                onChange={handleResumeChange}
                 accept=".pdf,.doc,.docx"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                className="w-full px-4 py-3 cursor-pointer border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               />
               <p
@@ -494,7 +639,7 @@ export default function TalentApplicationPage() {
               >
                 Accepted formats: PDF, DOC, DOCX (Max 5MB)
               </p>
-            </div> */}
+            </div>
 
             {/* LinkedIn Link */}
             <div>
@@ -537,9 +682,16 @@ export default function TalentApplicationPage() {
                 onChange={handleInputChange}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="Share a link to your introductio video"
+                placeholder="https://youtube.com/watch?v=... or Loom link"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               />
+              <p
+                className="text-sm text-gray-500 mt-2"
+                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+              >
+                2-3 minute video introducing yourself and your skills
+                (YouTube, Loom, or similar)
+              </p>
             </div>
 
             {/* Portfolio Link */}
@@ -586,59 +738,16 @@ export default function TalentApplicationPage() {
               />
             </div>
 
-            {/* Short Bio */}
-            {/* <div>
-              <label
-                htmlFor="shortBio"
-                className="block text-sm font-semibold text-gray-900 mb-3"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                Professional Bio *
-              </label>
-              <textarea
-                id="shortBio"
-                name="shortBio"
-                required
-                rows={4}
-                value={formData.shortBio}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
-                placeholder="Tell us about yourself, your professional background, and what makes you a great hire..."
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              />
-            </div> */}
-
-            {/* Video Submission Link */}
-            {/* <div>
-              <label
-                htmlFor="videoSubmissionLink"
-                className="block text-sm font-semibold text-gray-900 mb-3"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                <Video size={16} className="inline mr-2" />
-                Video Introduction (Optional)
-              </label>
-              <input
-                type="url"
-                id="videoSubmissionLink"
-                name="videoSubmissionLink"
-                value={formData.videoSubmissionLink}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="https://youtube.com/watch?v=... or Loom link"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              />
-              <p
-                className="text-sm text-gray-500 mt-2"
-                style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
-              >
-                2-3 minute video introducing yourself and your skills
-                (YouTube, Loom, or similar)
-              </p>
-            </div> */}
-
             {/* Submit Button */}
             <div className="pt-6">
+              {formError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
+                  <p className="text-sm text-red-600" style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}>
+                    {formError}
+                  </p>
+                </div>
+              )}
               <button
                 type="submit"
                 disabled={isSubmitting}

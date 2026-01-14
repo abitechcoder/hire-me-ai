@@ -30,6 +30,7 @@ export default function ClientSignupPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const industries = [
     "Technology",
@@ -63,31 +64,48 @@ export default function ClientSignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
     try {
-      const response = await fetch("/api/clients", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      // 1. Create User Account
+      const user = await appwriteService.createUser({
+        email: formData.email,
+        password: formData.password,
+        name: formData.contactPerson
       });
 
-      if (!response.ok) {
-        throw new Error(
-          `When submitting client signup, the response was [${response.status}] ${response.statusText}`,
-        );
-      }
-
-      const user = await appwriteService.createUser({ email: formData.email, password: formData.password, name: formData.contactPerson });
       if (user) {
-        setSubmitted(true);
-        setAuthStatus(true);
-      }
+        // 2. Login User
+        const session = await appwriteService.loginUser({
+          email: formData.email,
+          password: formData.password
+        });
 
+        if (session) {
+          // 3. Create Client Profile with User ID
+          const response = await fetch("/api/clients", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...formData,
+              userId: user.$id // Pass the User ID to the API
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(
+              `Failed to create client profile`
+            );
+          }
+
+          setSubmitted(true);
+        }
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting your form. Please try again.");
+      setError(error.message || "There was an error submitting your form. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -102,7 +120,7 @@ export default function ClientSignupPage() {
 
   if (submitted) {
     return (
-      <div className="pt-20 pb-16 px-6">
+      <div className="pt-20 pb-16 px-6 h-screen grid place-items-center">
         <div className="max-w-2xl mx-auto text-center">
           <div className="mb-8">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -128,10 +146,9 @@ export default function ClientSignupPage() {
               className="text-lg text-gray-600 mb-8"
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
-              Thank you for signing up. Our team will review your requirements
-              and get back to you within 24 hours with qualified candidates.
+              Thank you for signing up. Kindly click on the button below to proceed to your dashboard.
             </p>
-            <div className="space-y-4 text-sm text-gray-500">
+            {/* <div className="space-y-4 text-sm text-gray-500">
               <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}>
                 📧 Check your email for next steps
               </p>
@@ -141,8 +158,8 @@ export default function ClientSignupPage() {
               <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}>
                 🎯 We'll match you with verified talent in 48 hours
               </p>
-            </div>
-            <div className="mt-8">
+            </div> */}
+            {/* <div className="mt-8">
               <a
                 href="/browse-talent"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
@@ -151,17 +168,17 @@ export default function ClientSignupPage() {
                 Browse Our Talent Pool
                 <ArrowRight size={20} className="ml-2" />
               </a>
-            </div>
+            </div> */}
           </div>
           <div className="mt-8">
-            <a
-              href="/dashboard"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
+            <button
+              onClick={() => setAuthStatus(true)}
+              className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-colors inline-flex items-center"
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               Go to Dashboard
               <ArrowRight size={20} className="ml-2" />
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -169,8 +186,8 @@ export default function ClientSignupPage() {
   }
 
   return (
-    <div className="pt-20 pb-16 px-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="pt-20 pb-16 px-6 min-h-screen">
+      <div className="max-w-4xl mx-auto pt-10 md:pt-20">
         {/* Header */}
         <div className="text-center mb-12">
           <h1
@@ -190,6 +207,22 @@ export default function ClientSignupPage() {
 
         {/* Form */}
         <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-12 shadow-lg">
+          {error && (
+            <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-red-700">
+                    {error}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid md:grid-cols-2 gap-6">
               {/* Company Name */}
@@ -339,7 +372,7 @@ export default function ClientSignupPage() {
             </div>
 
             {/* Role Requirements */}
-            <div>
+            {/* <div>
               <label
                 htmlFor="roleRequirements"
                 className="block text-sm font-semibold text-gray-900 mb-3"
@@ -358,10 +391,10 @@ export default function ClientSignupPage() {
                 placeholder="Describe the role, required skills, experience level, and any specific requirements..."
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               />
-            </div>
+            </div> */}
 
             {/* Rates */}
-            <div>
+            {/* <div>
               <label
                 htmlFor="budget"
                 className="block text-sm font-semibold text-gray-900 mb-3"
@@ -388,14 +421,14 @@ export default function ClientSignupPage() {
                 placeholder="e.g., $2000, $5000"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               />
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <div className="pt-6">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-colors flex items-center justify-center"
+                className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 disabled:bg-blue-400 text-white px-8 py-4 rounded-xl font-semibold text-sm lg:text-lg transition-colors flex items-center justify-center"
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
                 {isSubmitting ? (
@@ -405,7 +438,7 @@ export default function ClientSignupPage() {
                   </>
                 ) : (
                   <>
-                    Get Matched in 48 Hours
+                    Create Account
                     <ArrowRight size={20} className="ml-2" />
                   </>
                 )}

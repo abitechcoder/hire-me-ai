@@ -23,19 +23,18 @@ export default function Navigation() {
   const { user, setAuthStatus, setUser } = useAuth();
 
   const navigationItems = [
-    { name: "Dashboard", href: "/client/dashboard", key: "dashboard" },
+    { name: "My Dashboard", href: "/talent/dashboard", key: "dashboard" },
     {
-      name: "Browse Talent",
-      href: "/client/browse-talent",
-      key: "browse-talent",
+      name: "My Job Applications",
+      href: "/talent/my-job-applications",
+      key: "my-job-applications",
     },
-    { name: "Active Jobs", href: "/client/active-jobs", key: "active-jobs" },
-    { name: "Personnel", href: "/client/personnel-details", key: "personnel" },
+    { name: "My Profile", href: "/talent/my-profile", key: "my-profile" },
   ];
 
   const isActiveRoute = (href) => {
-    if (href === "/client") {
-      return pathname === "/client";
+    if (href === "/talent") {
+      return pathname === "/talent";
     }
     return pathname?.startsWith(href);
   };
@@ -107,14 +106,14 @@ export default function Navigation() {
                 {isProfileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
                     <Link
-                      href="/client/settings"
+                      href="/talent/my-profile"
                       className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                     >
                       <Settings size={16} />
-                      <span>Account Settings</span>
+                      <span>My Profile</span>
                     </Link>
                     <Link
-                      href="/client/help"
+                      href="/talent/help"
                       className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                     >
                       <HelpCircle size={16} />
@@ -167,15 +166,15 @@ export default function Navigation() {
                 {/* Mobile Profile Options */}
                 <hr className="my-4 border-gray-200" />
                 <Link
-                  href="/client/settings"
+                  href="/talent/my-profile"
                   className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Settings size={16} />
-                  <span>Account Settings</span>
+                  <span>My Profile</span>
                 </Link>
                 <Link
-                  href="/client/help"
+                  href="/talent/help"
                   className="flex items-center space-x-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

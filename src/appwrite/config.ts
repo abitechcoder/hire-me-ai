@@ -1,5 +1,5 @@
 import conf from "@/conf/config"
-import { Client, Account, ID } from 'appwrite';
+import { Client, Account, ID, Storage } from 'appwrite';
 
 type CreateUserAccount = {
     email: string,
@@ -19,6 +19,7 @@ appwriteClient
     .setProject(conf.appwriteProjectId); // Replace with your project ID
 
 export const account = new Account(appwriteClient);
+export const storage = new Storage(appwriteClient);
 
 class AppwriteService {
     async createUser({ email, password, name }: CreateUserAccount) {
@@ -26,11 +27,12 @@ class AppwriteService {
             const userAccount = await account.create(
                 { userId: ID.unique(), email, password, name }
             );
-            if (userAccount) {
-                return this.loginUser({ email, password });
-            } else {
-                return userAccount
-            }
+            // if (userAccount) {
+            //     return this.loginUser({ email, password });
+            // } else {
+            //     return userAccount
+            // }
+            return userAccount;
         } catch (error) {
             throw error;
         }
@@ -49,7 +51,7 @@ class AppwriteService {
         }
     }
 
-    async isLoggedIn(): Promise<Boolean> { 
+    async isLoggedIn(): Promise<Boolean> {
         try {
             const data = await this.getCurrentUser();
             return Boolean(data);
@@ -57,7 +59,7 @@ class AppwriteService {
             // throw error;
             return false;
         }
-        
+
     }
 
     async getCurrentUser() {
@@ -68,8 +70,8 @@ class AppwriteService {
             // throw error;
             return null;
         }
-        
-     }
+
+    }
 
     async logoutUser() {
         try {
@@ -78,7 +80,46 @@ class AppwriteService {
             // throw error;
             return null;
         }
-     }
+    }
+
+    // Storage methods
+    async uploadFile(file: File) {
+        try {
+            const response = await storage.createFile({
+                bucketId: conf.appwriteBucketId,
+                fileId: ID.unique(),
+                file: file
+            });
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    getFileUrl(fileId: string) {
+        return storage.getFileView({
+            bucketId: conf.appwriteBucketId,
+            fileId: fileId
+        });
+    }
+
+    async deleteFile(fileId: string) {
+        try {
+            await storage.deleteFile({ bucketId: conf.appwriteBucketId, fileId: fileId });
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async listFiles() {
+        try {
+            const response = await storage.listFiles({ bucketId: conf.appwriteBucketId });
+            return response.files;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 const appwriteService = new AppwriteService();

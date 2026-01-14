@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 
 export interface Talent {
-  id: string;
+  userId: string;
   Name: string;
   Email: string;
   "Phone Number": string;

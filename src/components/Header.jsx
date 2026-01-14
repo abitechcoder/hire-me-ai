@@ -30,31 +30,28 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             <a
               href="/browse-talent"
-              className={`${
-                isActive("/browse-talent")
-                  ? "text-blue-700 font-bold"
-                  : "text-gray-700"
-              } hover:text-blue-700 font-medium transition-colors`}
+              className={`${isActive("/browse-talent")
+                ? "text-blue-700 font-bold"
+                : "text-gray-700"
+                } hover:text-blue-700 font-medium transition-colors`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               Browse Talent
             </a>
             <a
               href="/how-it-works"
-              className={`${
-                isActive("/how-it-works")
-                  ? "text-blue-700 font-bold"
-                  : "text-gray-700"
-              } hover:text-blue-700 font-medium transition-colors`}
+              className={`${isActive("/how-it-works")
+                ? "text-blue-700 font-bold"
+                : "text-gray-700"
+                } hover:text-blue-700 font-medium transition-colors`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               How It Works
             </a>
             <a
               href="/pricing"
-              className={`${
-                isActive("/pricing") ? "text-blue-700 font-bold" : "text-gray-700"
-              } hover:text-blue-700 font-medium transition-colors`}
+              className={`${isActive("/pricing") ? "text-blue-700 font-bold" : "text-gray-700"
+                } hover:text-blue-700 font-medium transition-colors`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               Pricing
@@ -65,26 +62,25 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <a
               href="/login"
-              className={`${
-                isActive("/login") ? "text-blue-700 font-bold" : "text-gray-700"
-              } hover:text-blue-700 font-medium transition-colors`}
+              className={`${isActive("/login") ? "text-blue-700 font-bold" : "text-gray-700"
+                } hover:text-blue-700 font-medium transition-colors`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               Login
             </a>
+            <p>|</p>
             <a
-              href="/talent/apply"
-              className={`${
-                isActive("/talent/apply")
-                  ? "text-blue-700 font-bold"
-                  : "text-gray-700"
-              } hover:text-blue-700 font-medium transition-colors`}
+              href="/signup"
+              className={`${isActive("/signup")
+                ? "text-blue-700 font-bold"
+                : "text-gray-700"
+                } hover:text-blue-700 font-medium transition-colors`}
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
-              Join as Talent
+              Sign Up
             </a>
             <a
-              href="/client/signup"
+              href="/client/dashboard"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
               style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
@@ -107,53 +103,48 @@ export default function Header() {
             <div className="flex flex-col space-y-4">
               <a
                 href="/browse-talent"
-                className={`${
-                  isActive("/browse-talent")
-                    ? "text-blue-700 font-bold"
-                    : "text-gray-700"
-                } hover:text-blue-700 font-medium`}
+                className={`${isActive("/browse-talent")
+                  ? "text-blue-700 font-bold"
+                  : "text-gray-700"
+                  } hover:text-blue-700 font-medium`}
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
                 Browse Talent
               </a>
               <a
                 href="/how-it-works"
-                className={`${
-                  isActive("/how-it-works")
-                    ? "text-blue-700 font-bold"
-                    : "text-gray-700"
-                } hover:text-blue-700 font-medium`}
+                className={`${isActive("/how-it-works")
+                  ? "text-blue-700 font-bold"
+                  : "text-gray-700"
+                  } hover:text-blue-700 font-medium`}
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
                 How It Works
               </a>
               <a
                 href="/pricing"
-                className={`${
-                  isActive("/pricing")
-                    ? "text-blue-700 font-bold"
-                    : "text-gray-700"
-                } hover:text-blue-700 font-medium`}
+                className={`${isActive("/pricing")
+                  ? "text-blue-700 font-bold"
+                  : "text-gray-700"
+                  } hover:text-blue-700 font-medium`}
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
                 Pricing
               </a>
               <a
                 href="/login"
-                className={`${
-                  isActive("/login") ? "text-blue-700 font-bold" : "text-gray-700"
-                } hover:text-blue-700 font-medium`}
+                className={`${isActive("/login") ? "text-blue-700 font-bold" : "text-gray-700"
+                  } hover:text-blue-700 font-medium`}
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
                 Login
               </a>
               <a
                 href="/talent/apply"
-                className={`${
-                  isActive("/talent/apply")
-                    ? "text-blue-700 font-bold"
-                    : "text-gray-700"
-                } hover:text-blue-700 font-medium`}
+                className={`${isActive("/talent/apply")
+                  ? "text-blue-700 font-bold"
+                  : "text-gray-700"
+                  } hover:text-blue-700 font-medium`}
                 style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
               >
                 Join as Talent

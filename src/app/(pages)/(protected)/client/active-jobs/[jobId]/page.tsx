@@ -246,7 +246,7 @@ export default function CandidatesPage() {
         <div className="space-y-4">
           {getCandidatesByStatus(activeSection).map((candidate) => (
             <div
-              key={candidate.id}
+              key={candidate.userId}
               className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200"
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-6">
@@ -320,7 +320,7 @@ export default function CandidatesPage() {
 
                   <div className="flex items-center space-x-3">
                     <Link
-                      href={`/client/talent/${candidate.id}`}
+                      href={`/client/talent/${candidate.userId}`}
                       className="inline-flex items-center px-3 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
                     >
                       <Eye size={14} className="mr-1" />

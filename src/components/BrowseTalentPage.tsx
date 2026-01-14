@@ -87,8 +87,8 @@ export default function BrowseTalentPage() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6 pt-20 pb-16">
+    <div className="min-h-screen bg-gray-50 pt-10">
+      <div className="max-w-7xl mx-auto px-6 pb-16">
         {/* Header */}
         <div className="mb-12">
           <h1
@@ -187,7 +187,7 @@ export default function BrowseTalentPage() {
         {/* Talent Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTalents.map((person: any) => (
-            <TalentCard key={person.id} person={person} />
+            <TalentCard key={person.userId} person={person} />
           ))}
         </div>
 

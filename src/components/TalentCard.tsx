@@ -9,7 +9,7 @@ import {
 import useAuth from '@/hooks/useAuth';
 import { Talent } from '@/hooks/queries/useTalents';
 
-const TalentCard = ({ person }: {person: Talent}) => {
+const TalentCard = ({ person }: { person: Talent }) => {
     const { authStatus } = useAuth();
     const [unlockedProfiles, setUnlockedProfiles] = useState(new Set());
 
@@ -19,7 +19,7 @@ const TalentCard = ({ person }: {person: Talent}) => {
         if (confirmed) {
             setUnlockedProfiles((prev) => new Set(prev).add(talentId));
             alert(
-                "Contact information unlocked! You can now view full contact details and book meetings.",
+                "Contact information unlocked! You can now view full contact details and book meetings."
             );
         }
     };
@@ -27,7 +27,7 @@ const TalentCard = ({ person }: {person: Talent}) => {
     const isUnlocked = (talentId: any) => unlockedProfiles.has(talentId);
     return (
         <div
-            key={person.id}
+            key={person.userId}
             className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
         >
             {/* Header */}
@@ -129,7 +129,7 @@ const TalentCard = ({ person }: {person: Talent}) => {
 
             {/* Actions */}
             <div className="space-y-3">
-                <Link href={`/talent/${person.id}`}
+                <Link href={`/talent/${person.userId}`}
                     className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
                     style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                 >
@@ -138,17 +138,17 @@ const TalentCard = ({ person }: {person: Talent}) => {
                 </Link>
 
 
-                {!authStatus ? (<Link href={`/client/signup`}
+                {!authStatus ? (<Link href={`/client/dashboard`}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center"
                     style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
                 >
                     Request Talent
                 </Link>) : (
                     <div className='space-y-3'>
-                        {!isUnlocked(person.id) ? (
+                        {!isUnlocked(person.userId) ? (
                             <>
                                 <button
-                                    onClick={() => handleUnlockContact(person.id)}
+                                    onClick={() => handleUnlockContact(person.userId)}
                                     className="w-full inline-flex items-center justify-center px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
                                 >
                                     <Unlock size={16} className="mr-2" />

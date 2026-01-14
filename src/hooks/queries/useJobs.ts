@@ -79,3 +79,18 @@ export function useUpdateJob() {
     },
   });
 }
+
+// Apply for a job
+export function useApplyJob() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ jobId, talentId }: { jobId: string; talentId: string }) => {
+      const response = await apiClient.post<{ success: boolean }>(`/jobs/${jobId}/apply`, { talentId });
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: jobKeys.all });
+    },
+  });
+}

@@ -13,7 +13,7 @@ export async function GET(request: Request,
     }
 
     try {
-        const tableName = 'Talent Profiles';
+        const tableName = 'Talents';
         let record;
 
         // Check if id looks like an Airtable Record ID
@@ -29,7 +29,7 @@ export async function GET(request: Request,
         // If not found by Record ID, try custom ID field
         if (!record) {
             record = await BASE(tableName).select({
-                filterByFormula: `{id} = '${id}'`,
+                filterByFormula: `{userId} = '${id}'`,
                 maxRecords: 1,
             }).firstPage().then(records => records[0]);
         }

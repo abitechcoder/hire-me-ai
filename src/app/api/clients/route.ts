@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import {BASE} from '@/airtable/config';
+import { BASE } from '@/airtable/config';
+import { assignLabelToUser } from '@/lib/appwriteServer';
 
 export async function POST(request: Request) {
     try {
@@ -7,15 +8,27 @@ export async function POST(request: Request) {
 
         // Parse the request body
         const body = await request.json();
+        const { userId, ...formData } = body;
+
+        // Assign 'client' label to the user if userId is provided
+        if (userId) {
+            try {
+                await assignLabelToUser(userId, 'client');
+            } catch (labelError) {
+                console.error('Error assigning label:', labelError);
+                // Continue even if label assignment fails, but log it
+            }
+        }
 
         const data = {
-            "Company Name": body.companyName,
-            Industry: body.industry,
-            "Contact Person": body.contactPerson,
-            Email: body.email,
-            "Role Needs": body.roleRequirements,
-            Budget: Number(body.budget),
-            "LinkedIn Profile URL": body.linkedInUrl,
+            userId: userId,
+            "Company Name": formData.companyName,
+            Industry: formData.industry,
+            "Contact Person": formData.contactPerson,
+            Email: formData.email,
+            "Role Needs": formData.roleRequirements,
+            Budget: Number(formData.budget),
+            "LinkedIn Profile URL": formData.linkedInUrl,
         };
 
         // Create a new record in Airtable

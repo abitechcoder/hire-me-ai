@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import {BASE} from '@/airtable/config';
+import { BASE } from '@/airtable/config';
+import { assignLabelToUser } from '@/lib/appwriteServer';
 
 export async function GET(request: Request) {
     try {
-        const tableName = 'Talent Profiles';
+        const tableName = 'Talents';
 
         const records = await BASE(tableName)
             .select({
@@ -27,12 +28,16 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
     try {
-        const tableName = 'Talent Profiles';
+        const tableName = 'Talents';
 
         // Parse the request body
         const body = await request.json();
 
+        // Assign "talent" label to user in Appwrite before saving to Airtable
+        await assignLabelToUser(body.userId, 'talent');
+
         const data = {
+            userId: body.userId,
             Name: body.fullName,
             Email: body.email,
             "Phone Number": body.phone,
@@ -46,17 +51,20 @@ export async function POST(request: Request) {
             Category: body.category,
             Location: body.location,
             Rates: Number(body.rates),
+            Resume: body.resumeUrl,
+            "Profile Photo": body.profilePhoto,
+            Bio: body.bio,
         };
 
         // Create a new record in Airtable
         const newUser = await BASE(tableName).create([{ fields: data }], { typecast: true });
-
+        // console.log("New User Data:", data);
         // Return the created record
         return NextResponse.json(newUser, { status: 201 });
     } catch (error) {
         // console.error('Airtable API Error:', error);
         return NextResponse.json(
-            { error: 'Failed to create user'},
+            { error: 'Failed to create user' },
             { status: 400 }
         );
     }

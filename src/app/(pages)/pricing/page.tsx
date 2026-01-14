@@ -114,8 +114,8 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="pt-20 pb-16 px-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="pt-10 pb-16 px-6">
+      <div className="max-w-7xl pt-20 mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <h1
@@ -134,7 +134,7 @@ export default function PricingPage() {
           </p>
 
           {/* Billing Toggle */}
-          <div className="inline-flex items-center bg-gray-100 rounded-full p-1 mb-12">
+          <div className="lg:inline-flex flex flex-wrap items-center bg-gray-100 rounded-lg lg:rounded-full p-1 mb-12">
             <button
               onClick={() => setBillingCycle("monthly")}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${billingCycle === "monthly"
